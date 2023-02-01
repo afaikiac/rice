@@ -1,0 +1,46 @@
+[Default Applications]
+x-scheme-handler/tg=org.telegram.desktop.desktop
+text/plain=lvim.desktop
+application/pdf=org.pwmt.zathura.desktop
+image/png=sxiv.desktop
+image/svg+xml=org.inkscape.Inkscape.desktop
+x-scheme-handler/http=firefox.desktop
+x-scheme-handler/https=firefox.desktop
+x-scheme-handler/chrome=firefox.desktop
+text/html=firefox.desktop
+application/x-extension-htm=firefox.desktop
+application/x-extension-html=firefox.desktop
+application/x-extension-shtml=firefox.desktop
+application/xhtml+xml=firefox.desktop
+application/x-extension-xhtml=firefox.desktop
+application/x-extension-xht=firefox.desktop
+image/jpeg=sxiv.desktop
+text/javascript=vim.desktop
+text/markdown=vim.desktop
+inode/directory=lf.desktop
+image/x-nikon-nef=sxiv.desktop
+
+[Added Associations]
+x-scheme-handler/tg=userapp-Telegram Desktop-ZUNGP1.desktop;org.telegram.desktop.desktop;
+text/plain=lvim.desktop;
+application/pdf=vim.desktop;sioyek.desktop;org.pwmt.zathura.desktop;userapp-sioyek-FLA6Q1.desktop;okularApplication_pdf.desktop;
+image/png=userapp-meh-3XF0Q1.desktop;vpv.desktop;userapp-vpv-KS15Q1.desktop;feh.desktop;sxiv.desktop;
+image/svg+xml=org.inkscape.Inkscape.desktop;
+x-scheme-handler/http=firefox.desktop;
+x-scheme-handler/https=firefox.desktop;
+x-scheme-handler/chrome=firefox.desktop;
+text/html=firefox.desktop;
+application/x-extension-htm=firefox.desktop;
+application/x-extension-html=firefox.desktop;
+application/x-extension-shtml=firefox.desktop;
+application/xhtml+xml=firefox.desktop;
+application/x-extension-xhtml=firefox.desktop;
+application/x-extension-xht=firefox.desktop;
+image/jpeg=feh.desktop;sxiv.desktop;
+application/x-shellscript=lvim.desktop;
+application/vnd.adobe.flash.movie=lvim.desktop;
+text/javascript=vim.desktop;
+text/markdown=vim.desktop;
+image/x-nikon-nef=sxiv.desktop;
+
+[Removed Associations]
