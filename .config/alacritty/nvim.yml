@@ -1,0 +1,32 @@
+import:
+ - ~/.config/alacritty/themes/gruvbox-light.yml
+
+env:
+  TERM: alacritty
+
+# window:
+#   dynamic_padding: true
+
+scrolling:
+  history: 50000
+
+font:
+  normal:
+    family: JetBrainsMono Nerd Font
+    style: Regular
+
+  bold:
+    #family: monospace
+    style: Bold
+
+  italic:
+    #family: monospace
+    style: Italic
+
+  bold_italic:
+    #family: monospace
+    style: Bold Italic
+
+  size: 13.0
+
+  builtin_box_drawing: true
