@@ -1,0 +1,28 @@
+// Main settings: setxkbmap -layout us,ru -print
+// https://wiki.archlinux.org/title/X_keyboard_extension
+// Linux. Настройка клавиатуры https://habr.com/ru/post/486872/
+// Игры с xkbcomp https://habr.com/ru/post/83223/
+
+xkb_keymap {
+    xkb_keycodes  { include "evdev+aliases(qwerty)" };
+    xkb_types     { include "complete"  };
+    xkb_compat    { include "complete" };
+    xkb_geometry  { include "pc(pc105)" };
+    xkb_symbols "my"  {
+        include "pc+us+ru:2+inet(evdev)"
+       
+        // Compose key Alt_R
+        // /usr/share/X11/xkb/symbols/compose
+        key <RALT>  { type[Group1]="TWO_LEVEL", [ Multi_key, Multi_key ] };       
+
+        // Pressing Caps_Lock switches to the next group,
+        // while Shift+Caps_Lock toggles CapsLock.
+        // /usr/share/X11/xkb/symbols/group
+        key <CAPS> {[ ISO_Next_Group,  Caps_Lock ], type[group1] = "TWO_LEVEL" };
+
+        // Pressing Shift+Alt_L switches to the first group.
+        key <LALT> {
+            [ Alt_L , ISO_First_Group ]
+        };
+    };
+};
