@@ -1,0 +1,3 @@
+# Add the -dynamic flag to every invocation of GHC.
+ghc-options:
+  "$everything": -dynamic
