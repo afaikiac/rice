@@ -1,0 +1,33 @@
+/** Basic config file **/
+
+configuration {
+    modi: "window,drun,run";
+    font:                       "Source Code Pro 14";
+    // bw:                      0;
+    fixed-num-lines:            true;
+    icon-theme:                 "Papirus";
+    // sidebar-mode:               true;
+
+    scroll-method:              0;
+    // click-to-exit:              false;
+
+    run-shell-command:          "alacritty -e fish -ic \"{cmd} && read\"";
+
+    display-drun:               "$";
+    display-window:             "#";
+    // display-run:                "";
+    // display-ssh:                "";
+    // display-windowcd:           "";
+    // display-combi:              "";
+
+    kb-row-up:                  "Up,Control+k,Shift+Tab,Shift+ISO_Left_Tab";
+    kb-row-down:                "Down,Control+j";
+    kb-accept-entry:            "Control+m,Return,KP_Enter";
+    // terminal:                   "alacritty";
+    kb-remove-to-eol:           "Control+Shift+e";
+    kb-mode-next:               "Shift+Right,Control+Tab";
+    kb-mode-previous:           "Shift+Left,Control+Shift+Tab,Control+h";
+    kb-remove-char-back:        "BackSpace";
+}
+
+@theme "light"
