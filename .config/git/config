@@ -1,0 +1,19 @@
+[user]
+	name = afaikiac
+	email = afaikiac@tuta.io
+	signingkey = sign
+[init]
+	defaultBranch = main
+[core]
+	editor = $EDITOR
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[credential]
+	helper = cache
+[diff]
+	tool = nvim -d
+[merge]
+	tool = nvim -d
