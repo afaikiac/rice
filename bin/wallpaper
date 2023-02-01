@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+set -eu -o pipefail
+
+colorscheme="${1:-1}"
+wallpaperdir="$HOME/Pictures/wallpapers"
+
+if [ "$colorscheme" == "light-pics" ]; then
+  feh  --no-fehbg \
+       --bg-fill $wallpaperdir/light/^^.jpg \
+       --bg-fill $wallpaperdir/light/^_^.jpg
+
+elif [ "$colorscheme" == "light-solid" ]; then
+  hsetroot -solid '#997379'
+
+elif [ "$colorscheme" == "dark-pics" ]; then
+  feh --randomize --bg-fill --no-fehbg $wallpaperdir/dark/*
+
+elif [ "$colorscheme" == "dark-solid" ]; then
+  hsetroot -solid '#33313B'
+
+else
+  echo -e "Choose theme <light/dark>-<solid/picsi>" 
+  echo "Using default theme"
+
+  feh --no-fehbg \
+      --bg-fill $wallpaperdir/nordic-wallpapers/wallpapers/ign_puppyInSpace.jpg \
+      --bg-fill $wallpaperdir/nordic-wallpapers/wallpapers/ign_driving.png
+fi

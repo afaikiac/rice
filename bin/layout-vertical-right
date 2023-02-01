@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -eu
+
+xrandr-smart \
+	--output 'eDP*' --primary --auto --dpi 96 --pos 0x1480 \
+	--output '!(eDP*)' --auto --dpi 96 \
+	--rotate right --pos 1920x0 
+ # --rotate right --right-of 'eDP*'
+
+xset -dpms

@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+# Adjust brightness of an external monitor using ddcutil
+# Usage: brightness [ddcutil display number]
+
+# Setup
+#
+# https://wiki.archlinux.org/title/Backlight#External_monitors
+# sudo modeprobe i2c_dev
+#
+# https://www.ddcutil.com/i2c_permissions/
+# sudo usermod <user-name> -aG i2c
+
+set -eu -o pipefail
+shopt -s nullglob lastpipe
+
+display="${1:-1}"
+
+ddcutil --display "$display" --terse getvcp 10 | read -r _ _ _ current _
+
+trap 'pkill -P $$' EXIT
+
+zenity --title "display $display brightness" --text "display $display brightness" --scale --print-partial --value="$current" \
+| while read -r desired; do
+	while read -r -t 0.2 desired_tmp; do desired="$desired_tmp"; done
+	ddcutil --display "$display" setvcp 10 "$desired"
+done

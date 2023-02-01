@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+set -eu -o pipefail
+
+mode="${1:-standart}"
+
+if [[ "$mode" == "standart" ]]; then
+
+  selection=$(hacksaw -f "-i %i -g %g")
+
+  shotgun $selection - \
+    | swappy -f - -o - \
+    | xclip -t 'image/png' -selection clipboard
+fi
+
+# see https://www.imagemagick.org/Usage/blur/#shadow_offset
+# see https://www.imagemagick.org/Usage/thumbnails/#rounded
+if [[ "$mode" == "shadow" ]]; then
+
+  selection=$(hacksaw -f "-i %i -g %g")
+  dir=$HOME/Pictures
+  timestamp=$(date +%Y%m%d-%H%M%S)
+  # source=$timestamp.png
+  output=$timestamp-shadow.png
+
+  shotgun -f png $selection $dir/$output
+
+  convert $dir/$output \( +clone -background black -shadow 60x20+0+0 \) +swap \
+    -background none -layers merge +repage $dir/$output
+
+  xclip -t 'image/png' -selection clipboard < $dir/$output
+fi
+
+if [[ "$mode" == "full" ]]; then
+
+  dir=$HOME/Pictures
+  filename=$(date +%Y%m%d-%H%M%S)-full.png
+
+  shotgun -f png $dir/$filename
+fi

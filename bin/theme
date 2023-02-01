@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+set -eu -o pipefail
+
+colorscheme="${1:-1}"
+
+if [[ "$colorscheme" == "light" || "$colorscheme" == "dark" ]]; then
+  # Xmonad
+  sed  -i "s/import Theme.*/import Theme.${colorscheme^}/g" "$HOME"/.config/xmonad/xmonad.hs || echo "Cannot modify xmonad.hs"
+  xmonad --restart
+
+  # alacritty
+  sed -i "s+  - \~/.config/alacritty/theme/.*+  - \~/.config/alacritty/theme/$colorscheme.yml+g" "$HOME"/.config/alacritty/alacritty.yml
+
+  # rofi
+  sed -i "s/^@theme \".*/@theme \"$colorscheme\"/g" "$HOME"/.config/rofi/config.rasi
+else
+  echo "Choose light or dark theme." && exit 0
+fi

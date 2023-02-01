@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+set -eu -o pipefail
+
+function export_to_pdflists() {
+	echo -e "\nExport svglists to pdflists"
+  echo ---------------------------
+
+  local svglists=("$@")
+
+  for svg in "${svglists[@]}"; do
+    local pdf
+    pdf="$(echo "$svg" | sed 's/svg/pdf/')"
+    echo -e "\nExporting $svg to $pdf"
+    # inkscape --export-pdf="$pdf" "$svg"
+    rsvg-convert -f pdf -o "$pdf" "$svg"
+  done
+}
+
+function concat_pdfs() {
+	echo -e "\nConcatenate result PDFs"
+	echo -----------------------
+
+	gs -dNOPAUSE -sDEVICE=pdfwrite \
+		-sOUTPUTFILE="./result.pdf" \
+		-dBATCH ${1}
+}
+
+svglists=($(find . -name "*.svg" | sort -V))
+
+export_to_pdflists "${svglists[@]}"
+
+pdflists=$(find . -name "*.pdf" | sort -V)
+
+concat_pdfs "${pdflists}"
+

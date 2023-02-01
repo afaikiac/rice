@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+set -eu
+
+pactl set-source-mute 0 toggle
+
+status=$(pactl get-source-mute 0)
+
+if [ "$status" = 'Mute: yes' ]; then
+  notify-send 'muted' -t 2000 \
+    -h string:x-canonical-private-synchronous:microphone-status
+fi
+if [ "$status" = 'Mute: no' ]; then
+  # notify-send "let's talk" -t 2000 \
+  notify-send "live" -u critical -t 0 \
+    -h string:x-canonical-private-synchronous:microphone-status
+fi

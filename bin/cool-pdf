@@ -1,0 +1,92 @@
+#!/usr/bin/env bash
+
+set -eu -o pipefail
+
+filename="${1}"
+
+function export_pdf_to_vectorize_pdflists() {
+	echo -e "\n####################################"
+	echo -e "# Export pdf to vectorize pdflists #"
+	echo -e "####################################"
+
+	local countpages=$(pdfinfo "${1}" | awk '/Pages/ {print $2}')
+
+	for firstpage in $(seq 1 10 ${countpages}); do
+
+		local lastpage=$(expr ${firstpage} + 9)
+		process_pages_to_bitmap ${firstpage} ${lastpage} "${1}" "${2}"
+
+		# echo firstpage: ${firstpage}, lastpage: ${lastpage}
+
+		local bitmapfiles=$(find "${2}" -name '*.ppm' | sort)
+		vectorize_bitmaps "${bitmapfiles}"
+		find "${2}" -name '*.ppm' -delete
+	done
+}
+
+function process_pages_to_bitmap() {
+	echo -e "\nProcess pages to bitmap"
+	echo -----------------------
+	pdftoppm -r 400 -progress \
+		-f ${1} \
+		-l ${2} \
+		"${3}" \
+		"${4}/page"
+}
+
+function vectorize_bitmaps() {
+	echo -e "\nVectorize bitmap files"
+	echo ----------------------
+
+	potrace -b pdf --progress \
+		--resolution 300 \
+		${1}
+}
+
+function concat_pdfs() {
+	echo -e "\nConcatenate result PDFs"
+	echo -----------------------
+
+	gs -dNOPAUSE -sDEVICE=pdfwrite \
+		-sOUTPUTFILE="${2}" \
+		-dBATCH ${1}
+}
+
+function ocr_pdf() {
+	echo -e "\nPDF OCR"
+	echo -------
+	local tempocrpdfout="${1}/ocrpdf"
+	docker run --rm -i ocrmypdf \
+		-l eng+rus \
+		- - <"${2}" >"${tempocrpdfout}" &&
+		cp "${tempocrpdfout}" "${2}"
+}
+
+function clean_dir() {
+	echo -e "\nClean temp directory"
+	rm -rf "${1}"
+}
+
+if [[ "$filename" != "" ]]; then
+	pdfin=$(realpath "$filename")
+	echo -e "\nInput file: ${pdfin}"
+
+	tempdir=$(mktemp -d)
+	echo -e "\nTemp directory: ${tempdir}"
+
+	export_pdf_to_vectorize_pdflists "${pdfin}" "${tempdir}"
+
+	updatedpdfpages=$(find "${tempdir}" -name '*.pdf' | sort)
+	pdfout="$(dirname "${pdfin}")/$(basename -s .pdf "${pdfin}")_UPDATED.pdf"}
+
+	concat_pdfs "${updatedpdfpages}" "${pdfout}"
+
+	ocr_pdf "${tempdir}" "${pdfout}"
+
+	clean_dir "${tempdir}"
+
+	echo -e "\nSUCCESS!"
+
+else
+	echo "ERROR: select a file"
+fi
