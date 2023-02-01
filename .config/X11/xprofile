@@ -1,0 +1,10 @@
+xsetroot -cursor_name left_ptr &
+xset r rate 250 25 &
+xkbcomp -w 0 $HOME/.config/xkb/xkbrc $DISPLAY > /dev/null &
+#xxkb &
+layout-auto &
+dunst -conf $HOME/.config/dunst/dunstrc &
+cbatticon &
+copyq &
+# xflux -l 55.79 -g 37.71 &
+
