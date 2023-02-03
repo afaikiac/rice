@@ -36,5 +36,10 @@ if status is-interactive
     bind '$' __history_previous_command_arguments
   end
   
+  # pyenv support
+  if type -q "pyenv"
+    pyenv init - | source
+    pyenv virtualenv-init - | source
+  end
+  
 end
-

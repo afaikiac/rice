@@ -74,6 +74,7 @@ export XINITRC="$XDG_CONFIG_HOME/X11/xinitrc"
 export TEXMFVAR="$XDG_CACHE_HOME/texlive/texmf-var"
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
 export ANSIBLE_HOME="$XDG_DATA_HOME/ansible"
+export PYENV_ROOT="$XDG_DATA_HOME/pyenv"
 
 # Greeter for xinit
 if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
