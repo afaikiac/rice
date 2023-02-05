@@ -3,3 +3,6 @@ uninstall-all-py-pkgs:
 
 install-py-pkgs:
 	pip3 install --isolated --upgrade pdm poetry jupytext ipython	
+
+init-config-wget:
+	echo hsts-file \= "$XDG_CACHE_HOME"/wget-hsts > "$WGETRC"

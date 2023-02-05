@@ -35,7 +35,6 @@ fi
 
 session=${1}
 
-echo 3
 case $session in
     xmonad ) exec "$XDG_CACHE_HOME"/xmonad/xmonad-x86_64-linux;;
           *) exec $1;;
