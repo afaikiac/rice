@@ -42,5 +42,6 @@ application/vnd.adobe.flash.movie=lvim.desktop;
 text/javascript=vim.desktop;
 text/markdown=vim.desktop;
 image/x-nikon-nef=sxiv.desktop;
+application/x-xpinstall=zotero.desktop;
 
 [Removed Associations]
