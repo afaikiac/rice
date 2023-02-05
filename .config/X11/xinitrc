@@ -1,4 +1,5 @@
 #!/bin/sh
+
 [ -f /etc/xprofile ] && . /etc/xprofile
 [ -f "$XDG_CONFIG_HOME/X11/xprofile" ] && . "$XDG_CONFIG_HOME/X11/xprofile"
 
