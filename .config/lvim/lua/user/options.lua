@@ -1,7 +1,7 @@
 -- lvim.colorscheme = "gruvbox"
 -- vim.o.background = "light"
--- lvim.log.level = "INFO"
-lvim.log.level = "WARN"
+lvim.log.level = "INFO"
+-- lvim.log.level = "WARN"
 lvim.leader = " " -- view all the defaults by pressing <leader>Lk
 lvim.reload_config_on_save = false
 lvim.format_on_save = false
@@ -32,6 +32,7 @@ vim.g["spellfile_URL"] = "https://ftp.nluug.nl/vim/runtime/spell"
 
 -- disable providers warning
 vim.g.loaded_python3_provider = 0
+-- vim.g.python3_host_prog="/home/dl2718/.local/share/virtualenvs/nvim/bin/python"
 vim.g.loaded_ruby_provider = 0
 vim.g.loaded_node_provider = 0
 vim.g.loaded_perl_provider = 0

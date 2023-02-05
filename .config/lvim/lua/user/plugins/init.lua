@@ -90,7 +90,7 @@ lvim.plugins = {
 		end,
 	},
 	{
-		"norcalli/nvim-colorizer.lua", -- color highlighter
+		"NvChad/nvim-colorizer.lua", -- color highlighter
 		event = "BufRead",
 		config = function()
 			require("user.plugins.configs.colorizer")
@@ -120,12 +120,11 @@ lvim.plugins = {
 	},
 	{
 		"epwalsh/obsidian.nvim",
-		lazy = true,
-		ft = { "markdown" },
+    -- 02-04-23 cmp completions don't work
 		config = function()
 			require("user.plugins.configs.obsidian")
 		end,
-		-- enabled = false,
+    enabled = false,
 	},
 	{
 		"iamcco/markdown-preview.nvim",

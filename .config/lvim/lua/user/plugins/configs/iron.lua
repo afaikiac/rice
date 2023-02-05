@@ -10,6 +10,7 @@ require("iron.core").setup({
         format = require("iron.fts.common").bracketed_paste,
       },
     },
+    repl_open_cmd = "vertical botright 80 split",
   },
   keymaps = {
     send_motion = "ctr",
