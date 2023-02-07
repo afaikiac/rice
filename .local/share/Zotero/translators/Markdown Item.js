@@ -16,8 +16,7 @@ function doExport() {
   while (item = Zotero.nextItem()) {
     var author = item.creators && item.creators[0] ? item.creators[0].lastName : '';
     var title = item.title;
-    // var year = item.date;
-		var year = item.date ? new Date(item.date).getFullYear() : '';
+    var year = item.date ? new Date(item.date).getFullYear() : '';
     
     var markdown = '';
     if (author && year) {
