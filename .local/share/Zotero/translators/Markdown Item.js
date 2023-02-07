@@ -14,21 +14,22 @@
 function doExport() {
   var item;
   while (item = Zotero.nextItem()) {
-		var author = item.creators && item.creators[0] ? item.creators[0].lastName : '';
+    var author = item.creators && item.creators[0] ? item.creators[0].lastName : '';
     var title = item.title;
-    var year = item.date;
-
+    // var year = item.date;
+		var year = item.date ? new Date(item.date).getFullYear() : '';
+    
     var markdown = '';
-		if (author && year) {
-			markdown = '[' + author + ', ' + year + ']';
-		} else if (author) {
-			markdown = '[' + author + ']';
-		} else if (title) {
-			markdown = '[' + title + ']';
-		}
-		
-		if (markdown) {
-			Zotero.write('(' + markdown + '(zotero://select/library/items/' + item.key + '))');
-		} else Zotero.write("Unexpected metadata")
+    if (author && year) {
+      markdown = '[' + author + ', ' + year + ']';
+    } else if (author) {
+      markdown = '[' + author + ']';
+    } else if (title) {
+      markdown = '[' + title + ']';
+    }
+    
+    if (markdown) {
+      Zotero.write('(' + markdown + '(zotero://select/library/items/' + item.key + '))');
+    } else Zotero.write("Unexpected metadata")
   }
 }
