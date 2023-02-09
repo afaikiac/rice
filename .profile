@@ -9,7 +9,7 @@ export PATH=$HOME/bin:$PATH
 export PATH=$HOME/.local/bin:$PATH
 
 # Rust
-if command -v ruby &>/dev/null; then
+if command -v cargo &>/dev/null; then
   export CARGO_HOME="$XDG_DATA_HOME/cargo"
   export PATH=$CARGO_HOME/bin:$PATH
 fi
