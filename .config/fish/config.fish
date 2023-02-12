@@ -27,6 +27,8 @@ if status is-interactive
     alias lf="lfcd"
   end
 
+  alias yadmui="gitui -d $(yadm worktree list -v | awk '{print $1}') --polling"
+
   # the bindings for !! and !$
   if [ "$fish_key_bindings" = "fish_vi_key_bindings" ];
     bind -Minsert ! __history_previous_command
