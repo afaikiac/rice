@@ -5,25 +5,24 @@ export XDG_DATA_HOME=$HOME/.local/share
 export XDG_STATE_HOME=$HOME/.local/state
 
 # Home
-export PATH=$HOME/bin:$PATH
 export PATH=$HOME/.local/bin:$PATH
 
 # Rust
 if command -v cargo &>/dev/null; then
-  export CARGO_HOME="$XDG_DATA_HOME/cargo"
-  export PATH=$CARGO_HOME/bin:$PATH
+	export CARGO_HOME="$XDG_DATA_HOME/cargo"
+	export PATH=$CARGO_HOME/bin:$PATH
 fi
 
 # [Ruby](https://wiki.archlinux.org/title/ruby#Setup)
 if command -v ruby &>/dev/null; then
 	export GEM_HOME="$(ruby -e 'puts Gem.user_dir')"
-	export PATH="$PATH:$GEM_HOME/bin"
+	export PATH=$PATH:$GEM_HOME/bin
 fi
 
 # pyenv
 if command -v pyenv &>/dev/null; then
-  export PYENV_ROOT="$XDG_DATA_HOME/pyenv"
-  export PATH=$PYENV_ROOT/shims:$PATH
+	export PYENV_ROOT="$XDG_DATA_HOME/pyenv"
+	export PATH=$PYENV_ROOT/shims:$PATH
 fi
 
 # R
@@ -35,7 +34,7 @@ export GPG_TTY=$(tty)
 if command -v lvim &>/dev/null; then
 	export VISUAL=lvim
 	export EDITOR="$VISUAL"
-  export MANPAGER='lvim +Man!'
+	export MANPAGER='lvim +Man!'
 fi
 
 # if vim --version 2>/dev/null >/dev/null; then
