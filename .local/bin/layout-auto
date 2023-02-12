@@ -24,8 +24,8 @@ function fingerprint-outputs {
 }
 
 fingerprint=$(fingerprint-outputs)
-if [[ -f ~/bin/.xlayout/"$fingerprint" ]]; then
-	~/bin/.xlayout/"$fingerprint"
+if [[ -f "$(dirname "$0")/.xlayout/$fingerprint" ]]; then
+	"$(dirname "$0")/.xlayout/$fingerprint"
 elif [[ "${1-}" ]]; then
 	"$1"
 else
