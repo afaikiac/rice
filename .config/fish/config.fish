@@ -4,7 +4,6 @@ if status is-interactive
   set -U fish_greeting
 
   fish_vi_key_bindings
-
   # emulates vim's cursor shape behavior
   set fish_cursor_default block
   set fish_cursor_insert line
@@ -44,4 +43,5 @@ if status is-interactive
     pyenv virtualenv-init - | source
   end
   
+  eval $(keychain --eval --quiet id_ed25519_github)
 end
