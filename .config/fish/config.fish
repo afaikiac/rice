@@ -43,5 +43,5 @@ if status is-interactive
     pyenv virtualenv-init - | source
   end
   
-  eval $(keychain --eval --quiet id_ed25519_github)
+  eval $(keychain --dir "$XDG_RUNTIME_DIR" --eval --quiet id_ed25519_github)
 end
