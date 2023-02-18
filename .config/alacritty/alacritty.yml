@@ -6,9 +6,7 @@ env:
 #   padding:
 #     x: 6
 #     y: 6
-
 #   opacity: 1.0
-
 scrolling:
   history: 50000
 
@@ -70,7 +68,6 @@ font:
   size: 14.0
 
   builtin_box_drawing: true
-
   # offset:
   #   x: 0
   #   y: 1

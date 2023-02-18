@@ -45,3 +45,4 @@ colors:
     magenta: '#b16286'
     cyan:    '#689d6a'
     white:   '#32302f'
+theme: Gruvbox-Light
