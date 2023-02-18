@@ -4,9 +4,10 @@ set hidden true
 # curl https://raw.githubusercontent.com/gokcehan/lf/master/etc/icons.example -o ~/.config/lf/icons
 set icons true
 set ignorecase true
+set period 1
 
 # interpreter for shell commands
-set shell sh
+set shell bash
 
 # set '-eu' options for shell commands
 # These options are used to have safer shell commands. Option '-e' is used to
