@@ -18,6 +18,8 @@ end
 function __toaster_current_folder
   if test $PWD = '/'
     echo -n '/'
+  else if test $PWD = $HOME
+    echo -n 'ᕕ(⌐■_■)ᕗ ♪♬'
   else
     echo -n $PWD | grep -o -E '[^\/]+$'
   end
