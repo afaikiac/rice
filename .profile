@@ -4,6 +4,12 @@ export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
 export XDG_STATE_HOME=$HOME/.local/state
 
+# [Ruby](https://wiki.archlinux.org/title/ruby#Setup)
+if command -v ruby &>/dev/null; then
+	export GEM_HOME="$(ruby -e 'puts Gem.user_dir')"
+	export PATH=$PATH:$GEM_HOME/bin
+fi
+
 # Home
 export PATH=$HOME/.local/bin:$PATH
 
@@ -13,20 +19,11 @@ if command -v cargo &>/dev/null; then
 	export PATH=$CARGO_HOME/bin:$PATH
 fi
 
-# [Ruby](https://wiki.archlinux.org/title/ruby#Setup)
-if command -v ruby &>/dev/null; then
-	export GEM_HOME="$(ruby -e 'puts Gem.user_dir')"
-	export PATH=$PATH:$GEM_HOME/bin
-fi
-
 # pyenv
 if command -v pyenv &>/dev/null; then
 	export PYENV_ROOT="$XDG_DATA_HOME/pyenv"
 	export PATH=$PYENV_ROOT/shims:$PATH
 fi
-
-# R
-export R_LIBS_USER=$HOME/.local/lib/R/library
 
 # GnuPG
 export GPG_TTY=$(tty)
@@ -36,10 +33,6 @@ if command -v lvim &>/dev/null; then
 	export EDITOR="$VISUAL"
 	export MANPAGER='lvim +Man!'
 fi
-
-# if vim --version 2>/dev/null >/dev/null; then
-# 	export MANPAGER='/bin/bash -c "vim -MRn -c \"set buftype=nofile showtabline=0 ft=man ts=8 nomod nolist norelativenumber nonu noma foldmethod=indent foldnestmax=1 foldenable\" -c \"hi Folded ctermbg=NONE\" -c \"normal L\" -c \"nmap q :qa<CR>\"</dev/tty <(col -b)"'
-# fi
 
 # PAGER
 if command -v bat &>/dev/null; then
@@ -74,6 +67,7 @@ export DOCKER_CONFIG="$XDG_CONFIG_HOME/docker"
 export GNUPGHOME="$XDG_DATA_HOME/gnupg"
 export GOPATH="$XDG_DATA_HOME/go"
 export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
+export R_LIBS_USER="$XDG_DATA_HOME/R/library"
 export IPYTHONDIR="$XDG_CONFIG_HOME/ipython"
 export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME/jupyter"
 export STACK_ROOT="$XDG_DATA_HOME/stack"
