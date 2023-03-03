@@ -16,14 +16,14 @@ function die() {
 }
 
 function is_timestamped() {
-	[[ "$1" =~ \.[[:alnum:]]+$ ]] && [[ "$1" =~ .*\-[[:digit:]]{4}\-[[:digit:]]{2}\-[[:digit:]]{2}\-[[:digit:]]{6}(\.[[:alnum:]]+)$ ]]
+	[[ "$1" =~ \.[[:alnum:]]+$ ]] && [[ "$1" =~ [[:digit:]]{4}\-[[:digit:]]{2}\-[[:digit:]]{2}\-[[:digit:]]{6}(\.[[:alnum:]]+)$ ]]
 }
 
 function timestamp() {
 	local extension="${1##*.}"
 	local filename="${1%.*}"
 	local timestamp="$(date --utc '+%Y-%m-%d-%H%M%S')"
-	echo "${filename}-${timestamp}.${extension}"
+	printf "%s-%s.%s" "$filename" "$timestamp" "$extension"
 }
 
 function get_markdown_link() {
@@ -33,7 +33,7 @@ function get_markdown_link() {
 	else
 		link="[]($1)"
 	fi
-	echo "$link"
+	printf "%s" "$link"
 }
 
 function move_to_src() {
@@ -41,15 +41,15 @@ function move_to_src() {
 	local src=$2
 	local root=$3
 
-	local new_filename="$(basename "$file")"
+	local filename="$(basename "$file")"
 
 	if ! is_timestamped "$file"; then
-		new_filename="$(basename "$(timestamp "$file")")"
+		filename="$(basename "$(timestamp "$file")")"
 	fi
 
-	mv "$file" "$src/$new_filename"
+	mv "$file" "$src/$filename"
 
-	local link="$(realpath -e --relative-base "$root" "$src/$new_filename")"
+	local link="$(realpath -e --relative-base "$root" "$src/$filename")"
 	local markdown_link="$(get_markdown_link "$link")"
 	print "$markdown_link"
 }

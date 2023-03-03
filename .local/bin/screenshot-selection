@@ -6,35 +6,37 @@ mode="${1:-standart}"
 
 if [[ "$mode" == "standart" ]]; then
 
-  selection=$(hacksaw -f "-i %i -g %g")
+	selection=$(hacksaw -f "-i %i -g %g")
 
-  shotgun $selection - \
-    | swappy -f - -o - \
-    | xclip -t 'image/png' -selection clipboard
+	shotgun $selection - |
+		swappy -f - -o - |
+		xclip -t 'image/png' -selection clipboard
 fi
 
 # see https://www.imagemagick.org/Usage/blur/#shadow_offset
 # see https://www.imagemagick.org/Usage/thumbnails/#rounded
 if [[ "$mode" == "shadow" ]]; then
 
-  selection=$(hacksaw -f "-i %i -g %g")
-  dir=$HOME/Pictures
-  timestamp=$(date +%Y%m%d-%H%M%S)
-  # source=$timestamp.png
-  output=$timestamp-shadow.png
+	selection=$(hacksaw -f "-i %i -g %g")
+	dir=$HOME/Pictures
+	timestamp=$(date --utc +%Y-%m-%d-%H%M%S)
+	# source=$timestamp.png
+	output=shot-shadow-$timestamp.png
 
-  shotgun -f png $selection $dir/$output
+	shotgun -f png $selection $dir/$output
 
-  convert $dir/$output \( +clone -background black -shadow 60x20+0+0 \) +swap \
-    -background none -layers merge +repage $dir/$output
+	convert $dir/$output \( +clone -background black -shadow 60x20+0+0 \) +swap \
+		-background none -layers merge +repage $dir/$output
 
-  xclip -t 'image/png' -selection clipboard < $dir/$output
+	xclip -t 'image/png' -selection clipboard <$dir/$output
 fi
 
 if [[ "$mode" == "full" ]]; then
 
-  dir=$HOME/Pictures
-  filename=$(date +%Y%m%d-%H%M%S)-full.png
+	dir=$HOME/Pictures
+	filename=shot-full-$(date --utc +%Y-%m-%d-%H%M%S).png
 
-  shotgun -f png $dir/$filename
+	shotgun -f png $dir/$filename
+
+	xclip -t 'image/png' -selection clipboard <$dir/$filename
 fi
