@@ -48,8 +48,4 @@ if status is-interactive
     eval $(keychain --dir "$XDG_RUNTIME_DIR" --eval --quiet id_ed25519_github)
   end
 
-  if type -q "lvim"
-    and test -d "$HOME/wiki"
-    alias wiki="lvim $HOME/wiki/2023-02-13-115716.md"
-  end
 end
