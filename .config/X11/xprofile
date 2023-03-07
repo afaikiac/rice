@@ -1,5 +1,5 @@
 xsetroot -cursor_name left_ptr &
-xset r rate 250 45 &
+# xset r rate 250 45 &
 xkbcomp -w 0 -I$HOME/.config/X11/xkb $DISPLAY > /dev/null &
 #xxkb &
 layout-auto &

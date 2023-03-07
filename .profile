@@ -34,19 +34,20 @@ if command -v lvim &>/dev/null; then
 	export MANPAGER='lvim +Man!'
 fi
 
-# PAGER
 if command -v bat &>/dev/null; then
 	export PAGER="bat"
 fi
 
-# TERMINAL
 if command -v alacritty &>/dev/null; then
 	export TERMINAL="alacritty -e "
 fi
 
-# default shell
 if command -v fish &>/dev/null; then
 	export SHELL="/usr/bin/fish"
+fi
+
+if command -v firefox &>/dev/null; then
+	export BROWSER="firefox"
 fi
 
 # libvirt
@@ -80,9 +81,9 @@ export WGETRC="$XDG_CONFIG_HOME/wget/wgetrc"
 
 # Greeter for xinit
 if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
-	echo
-	read -p "Hi, cool man! Do you want to access Xmonad? [Y/n]: " -n 1 -r
-	echo
+	printf "\n"
+	read -p "Hi, man! Do you want to access Xmonad? [Y/n]: " -n 1 -r
+	printf "\n"
 	if [[ $REPLY =~ ^[yY]$ ]]; then
 		exec xinit xmonad
 	fi

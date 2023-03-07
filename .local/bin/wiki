@@ -23,7 +23,7 @@ function timestamp() {
 	local extension="${1##*.}"
 	local filename="${1%.*}"
 	local timestamp="$(date --utc '+%Y-%m-%d-%H%M%S')"
-	printf "%s-%s.%s" "$filename" "$timestamp" "$extension"
+	printf "%s_%s.%s" "$filename" "$timestamp" "$extension"
 }
 
 function get_markdown_link() {

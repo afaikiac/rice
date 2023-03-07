@@ -21,7 +21,7 @@ if [[ "$mode" == "shadow" ]]; then
 	dir=$HOME/Pictures
 	timestamp=$(date --utc +%Y-%m-%d-%H%M%S)
 	# source=$timestamp.png
-	output=shot-shadow-$timestamp.png
+	output=shot_shadow_$timestamp.png
 
 	shotgun -f png $selection $dir/$output
 
@@ -34,7 +34,7 @@ fi
 if [[ "$mode" == "full" ]]; then
 
 	dir=$HOME/Pictures
-	filename=shot-full-$(date --utc +%Y-%m-%d-%H%M%S).png
+	filename=shot_full_$(date --utc +%Y-%m-%d-%H%M%S).png
 
 	shotgun -f png $dir/$filename
 
