@@ -13,6 +13,7 @@ scrolling:
 font:
   normal:
     #family: monospace
+    #family: TerminessTTF Nerd Font
     family: SauceCodePro Nerd Font
     #family: CodeNewRoman Nerd Font
     #family: RobotoMono Nerd Font

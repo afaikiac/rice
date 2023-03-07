@@ -1,5 +1,5 @@
 import:
- - ~/.config/alacritty/themes/Gruvbox-Dark.yml
+ - ~/.config/alacritty/themes/Gruvbox-Light.yml
 
 env:
   TERM: alacritty
