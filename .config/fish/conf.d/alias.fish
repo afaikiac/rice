@@ -15,4 +15,10 @@ if status is-interactive
     alias yadmui="gitui -d $(yadm worktree list -v | awk '{print $1}') --polling"
   end
 
+
+  if type -q "fzf"
+    and type -q "camb"
+    alias cambl="camb l | fzf --preview 'camb {}'"
+  end
+
 end

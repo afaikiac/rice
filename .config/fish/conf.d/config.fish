@@ -1,6 +1,5 @@
 if status is-interactive
 
-  # remove greeting    
   set -U fish_greeting
 
   fish_vi_key_bindings
@@ -15,12 +14,12 @@ if status is-interactive
   end
 
   if type -q "pyenv"
-    pyenv init - | source
+    pyenv init --no-rehash - | source
     pyenv virtualenv-init - | source
   end
 
   if type -q "keychain"
-    eval $(keychain --dir "$XDG_RUNTIME_DIR" --eval --quiet id_ed25519_github)
+    keychain --dir "$XDG_RUNTIME_DIR" --eval --quiet id_ed25519_github | source
   end
 
 end
