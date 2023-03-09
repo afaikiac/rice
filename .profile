@@ -60,6 +60,8 @@ export PASSWORD_STORE_DIR="$XDG_DATA_HOME/pass"
 # xorg
 export XCURSOR_SIZE=29
 export XAUTHORITY="$XDG_RUNTIME_DIR/.Xauthority"
+export XINITRC="$XDG_CONFIG_HOME/X11/xinitrc"
+export XSERVERRC="$XDG_CONFIG_HOME/X11/xserverrc"
 
 # ~/. clean up
 export PARU_CONF="$XDG_CONFIG_HOME/paru/paru.conf"
@@ -72,8 +74,6 @@ export R_LIBS_USER="$XDG_DATA_HOME/R/library"
 export IPYTHONDIR="$XDG_CONFIG_HOME/ipython"
 export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME/jupyter"
 export STACK_ROOT="$XDG_DATA_HOME/stack"
-export XSERVERRC="$XDG_CONFIG_HOME/X11/xserverrc"
-export XINITRC="$XDG_CONFIG_HOME/X11/xinitrc"
 export TEXMFVAR="$XDG_CACHE_HOME/texlive/texmf-var"
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
 export ANSIBLE_HOME="$XDG_DATA_HOME/ansible"
