@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+CONDA_PATH="$XDG_DATA_HOME/miniconda3/condabin/conda"
+
+if [ -x "$CONDA_PATH" ]; then
+  $CONDA_PATH $@
+else
+  echo "Error: Conda executable not found at $CONDA_PATH."
+  exit 1
+fi

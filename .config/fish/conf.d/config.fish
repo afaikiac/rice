@@ -22,4 +22,8 @@ if status is-interactive
     keychain --dir "$XDG_RUNTIME_DIR" --eval --quiet id_ed25519_github | source
   end
 
+  if __check_conda
+      conda "shell.fish" "hook" | source
+  end
+
 end
