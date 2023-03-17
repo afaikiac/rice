@@ -6,7 +6,8 @@
 # Setup
 #
 # https://wiki.archlinux.org/title/Backlight#External_monitors
-# sudo modeprobe i2c_dev
+# modinfo i2c_dev
+# sudo modprobe i2c_dev
 #
 # https://www.ddcutil.com/i2c_permissions/
 # sudo usermod <user-name> -aG i2c
