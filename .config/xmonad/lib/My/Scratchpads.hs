@@ -26,7 +26,7 @@ myScratchPads =
     -- , NS "calculator" spawnCalc findCalc manageCalc
     ]
   where
-    spawnTerm = myTerminal ++ " -t emulator" ++ " -e tmux new -As\"(づ ᴗ _ᴗ)づ\""
+    spawnTerm = myTerminal ++ " -t emulator" ++ " -e tmux new -Asbase"
     findTerm = title =? "emulator"
     manageTerm = customFloating $ W.RationalRect l t w h
     -- manageTerm = doFloat
