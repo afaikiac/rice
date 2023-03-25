@@ -4,4 +4,4 @@ set -eu
 
 xrandr-smart --output 'eDP*' --auto --pos 0x0 --panning 0x0 --primary --dpi 96
 
-xset +dpms
+xset -dpms

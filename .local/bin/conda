@@ -1,20 +1,61 @@
 #!/usr/bin/env bash
 
-# How to properly install conda, I think so.
-# wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-# if [[ $(sha256sum Miniconda3-latest-Linux-x86_64.sh | awk '{print $1}') =~ \
-# 	32d73e1bc33fda089d7cd9ef4c1be542616bd8e437d1f77afeeaf7afdb019787 \
-# 	]]; then
-# 	echo ok
-# fi
-# chmod +x Miniconda3-latest-Linux-x86_64.sh
-# ./Miniconda3-latest-Linux-x86_64.sh 
+set -euo pipefail
 
-CONDABIN="$XDG_DATA_HOME/miniconda3/condabin/conda"
+function log() {
+	printf "%s\n" "[$0] $1" &>/dev/tty
+}
 
-if [ -x "$CONDABIN" ]; then
-  $CONDABIN "$@"
-else
-  echo "Error: Conda executable not found at $CONDABIN."
-  exit 1
-fi
+function die() {
+	log "$@"
+	exit 1
+}
+
+function install_conda_or_die() {
+	local pkgname=$1
+	local pkgver=$2
+	local url=$3
+	local sha256sum=$4
+	local prefix=$5
+	local tmpdir="$(mktemp -d "${XDG_CACHE_HOME:-"$HOME/.cache"}/${pkgname}-XXXXX")"
+	local installer="$tmpdir/${pkgname}.sh"
+
+	curl -fSL "$url" -o "$installer"
+
+	local sum="$(sha256sum "$installer" | awk '{print $1}')"
+	if [ "$sha256sum" == "$sum" ]; then
+		log "SHA256SUM verification succeeded"
+		chmod +x "$installer"
+		"$installer" -b -p "$prefix"
+		log "installation completed"
+	else
+		die "SHA256SUM verification failed"
+	fi
+
+	rm "$installer"
+	rmdir "$tmpdir"
+}
+
+function main() {
+	local pkgname="miniconda3"
+	local pkgver="latest"
+	local url="https://repo.anaconda.com/miniconda/Miniconda3-$pkgver-Linux-x86_64.sh"
+	local sha256sum="32d73e1bc33fda089d7cd9ef4c1be542616bd8e437d1f77afeeaf7afdb019787"
+	local prefix="${XDG_DATA_HOME:-"$HOME/.local/share"}/$pkgname"
+	local condabin="$prefix/condabin/conda"
+
+	if [ -x "$condabin" ]; then
+		$condabin "$@"
+	else
+		log "conda executable not found at '$condabin'"
+		read -p "Do you want to install it? [Y/n]: " -n 1 -r
+		printf "\n"
+		if [[ $REPLY =~ ^[yY]$ ]]; then
+			install_conda_or_die "$pkgname" "$pkgver" "$url" "$sha256sum" "$prefix"
+			exit 0
+		fi
+		exit 1
+	fi
+}
+
+main "$@"
