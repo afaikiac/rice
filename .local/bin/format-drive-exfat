@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+set -eu -o pipefail
+
+if [[ "$#" -ne 2 ]]; then
+	printf "Usage: %s <device_name>\n" "$(basename "$0")"
+	exit 1
+fi
+
+device_name="$1"
+
+if ! [[ -b "$device_name" ]]; then
+	printf "Error: '%s' is not a valid block device.\n" "$device_name"
+	exit 1
+fi
+
+printf "Selected device: %s\n" "$device_name"
+parted "$device_name" print
+printf "\n"
+
+read -p "WARNING: This operation will erase all data on $device_name. Do you want to continue? (y/n) " choice
+
+case "$choice" in
+y | Y)
+	if mount | grep "$device_name"; then
+		umount "$(mount | grep "$device_name" | awk '{print $1}')"
+	fi
+
+	sgdisk --clear "$device_name"
+	# the smart TV cannot search for the drive without it
+	partition_label=$(uuidgen | awk -v FS="-" '{print $1}')
+	sgdisk --new=1:0: --typecode=1:0700 --change-name=1:"$partition_label" "$device_name"
+	volume_label="$partition_label"
+	mkfs.exfat -n "$volume_label" "${device_name}1"
+	;;
+n | N)
+	printf "Formatting aborted.\n"
+	;;
+*)
+	printf "Invalid choice. Formatting aborted.\n"
+	;;
+esac
