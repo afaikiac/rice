@@ -1,10 +1,9 @@
 if status is-interactive
 
-  abbr -a --position anywhere S  systemctl
-  abbr -a --position anywhere SI systemctl status
-  abbr -a --position anywhere SS systemctl start
-  abbr -a --position anywhere SE systemctl enable
-  abbr -a --position anywhere SD systemctl disable
-  abbr -a --position anywhere SR systemctl restart
+  abbr --position anywhere S  "systemctl"
+  abbr SS "sudo systemctl"
+  abbr pdf-merge "gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile=merged.pdf"
+  abbr docker-image-rmi-none "docker images | tail -n +2 | awk '{if (\$1==\"<none>\") print \$3}' | xargs docker image rmi -f"
+  abbr docker-container-rm-all "docker container ls -a | tail -n +2 | awk '{print \$1}' | xargs docker container rm"
 
 end
