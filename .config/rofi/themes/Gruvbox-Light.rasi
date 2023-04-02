@@ -1,0 +1,113 @@
+* {
+    background:                  #fbf1c7;
+    normal-background:           rgba(0,0,0,0);
+    alternate-normal-background: rgba(0,0,0,0);
+
+    bordercolor:                 #cc241d;
+    separatorcolor:              #cc241d;
+
+    foreground:                  #32302f;
+    normal-foreground:           @foreground;
+    alternate-normal-foreground: @foreground;
+    selected-normal-foreground:  @foreground;
+
+    selected-normal-background:  #ebdbb2;
+    scrollbar-color:             #ebdbb2;
+    
+    background-color:            rgba(0,0,0,0);
+}
+window {
+    background-color: @background;
+    border-color:     @bordercolor;
+    border:           1;
+    padding:          6px 10px 10px ;
+    width:            900px;
+}
+mainbox {
+    border:  0;
+    padding: 0;
+}
+message {
+    border:       1px 0px 0px ;
+    border-color: @bordercolor;
+    padding:      6px ;
+}
+textbox {
+    text-color: @foreground;
+}
+listview {
+    fixed-height: 0;
+    border:       1px 0px 0px ;
+    border-color: @bordercolor;
+    spacing:      2px ;
+    padding:      10px 0px 0px ;
+    columns:			1;
+    lines:				11;
+    scrollbar:    false;
+}
+element {
+    border:  0px;
+    padding: 2px;
+}
+element-icon { 
+    size:             25px;
+    padding:          0px 7px 0px 2px;
+    background-color: inherit;
+    text-color:       inherit;
+}
+element-text {
+    background-color: inherit;
+    text-color:       inherit;
+}
+element.normal.normal {
+    background-color: @normal-background;
+    text-color:       @normal-foreground;
+}
+element.alternate.normal {
+    background-color: @alternate-normal-background;
+    text-color:       @alternate-normal-foreground;
+}
+element.normal.active {
+    background-color: @normal-background;
+    text-color:       @normal-foreground;
+}
+element.selected.normal {
+    background-color: @selected-normal-background;
+    text-color:       @selected-normal-foreground;
+}
+element.selected.active {
+    background-color: @selected-normal-background;
+    text-color:       @selected-normal-foreground;
+}
+scrollbar {
+    width:        4px;
+    border:       0;
+    handle-color: @scrollbar-color;
+    handle-width: 8px;
+    padding:      0;
+}
+inputbar {
+    spacing:    0;
+    text-color: @normal-foreground;
+    padding:    4px ;
+}
+case-indicator {
+    spacing:    0;
+    text-color: @normal-foreground;
+}
+entry {
+    spacing:    0;
+    text-color: @normal-foreground;
+}
+prompt {
+    spacing:    0;
+    text-color: @bordercolor;
+}
+inputbar {
+    children:   [ prompt,textbox-prompt-colon,entry,case-indicator ];
+}
+textbox-prompt-colon {
+    expand:     false;
+    margin:     2px 10px 0px 2px;
+    text-color: @normal-foreground;
+}
