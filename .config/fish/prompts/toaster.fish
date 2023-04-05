@@ -16,13 +16,10 @@ function __toaster_color_echo
 end
 
 function __toaster_current_folder
-  set -l pwd (prompt_pwd)
-  set -l base (basename "$pwd")
-  if test $pwd = "~"
+  if test $PWD = $HOME
     echo -n 'ᕕ(⌐■_■)ᕗ ♪♬'
   else
-    set -l expr "s|//|/|g"
-    echo -n (echo "$pwd" | sed -e $expr)
+    prompt_pwd
   end
 end
 
@@ -36,42 +33,42 @@ end
 
 function __toaster_rainbow
   if echo $argv[1] | grep -q -e $argv[3]
-    __toaster_color_echo $argv[2] "彡ミ"
+    __toaster_color_echo $argv[2] $argv[3]
   end
 end
 
 function __toaster_git_status_icons
   set -l git_status (__toaster_git_status_codes)
 
-  __toaster_rainbow $git_status $__toaster_color_pink 'D'
-  __toaster_rainbow $git_status $__toaster_color_orange 'R'
-  __toaster_rainbow $git_status $__toaster_color_white 'C'
-  __toaster_rainbow $git_status $__toaster_color_green 'A'
-  __toaster_rainbow $git_status $__toaster_color_blue 'U'
-  __toaster_rainbow $git_status $__toaster_color_lilac 'M'
-  __toaster_rainbow $git_status $__toaster_color_grey '?'
+  __toaster_rainbow $git_status $__toaster_color_pink 'D'   # Deleted
+  __toaster_rainbow $git_status $__toaster_color_orange 'R' # Renamed
+  __toaster_rainbow $git_status $__toaster_color_white 'C'  # Copied
+  __toaster_rainbow $git_status $__toaster_color_green 'A'  # Added
+  __toaster_rainbow $git_status $__toaster_color_blue 'U'   # Unmerged
+  __toaster_rainbow $git_status $__toaster_color_lilac 'M'  # Modified
+  __toaster_rainbow $git_status $__toaster_color_grey '?'   # Untracked
 end
 
 function __toaster_git_status
   # In git
   if test -n (__toaster_git_branch_name)
 
-    __toaster_color_echo $__toaster_color_blue " git"
-    __toaster_color_echo $__toaster_color_white ":"(__toaster_git_branch_name)
+    __toaster_color_echo $__toaster_color_white ' ['
+    __toaster_color_echo $__toaster_color_pink (__toaster_git_branch_name)
+    __toaster_color_echo $__toaster_color_white ']'
 
     if test -n (__toaster_git_status_codes)
-      __toaster_color_echo $__toaster_color_pink ' ●'
-      __toaster_color_echo $__toaster_color_white ' [^._.^]ﾉ'
+      __toaster_color_echo $__toaster_color_white ' (∩｀-´)⊃━☆ﾟ.*･｡ﾟ'
       __toaster_git_status_icons
     else
-      __toaster_color_echo $__toaster_color_green ' ○'
+      __toaster_color_echo $__toaster_color_green ' ヾ(-_- )ゞ'
     end
   end
 end
 
 function fish_prompt
   __toaster_color_echo $__toaster_color_blue "# "
-  __toaster_color_echo $__toaster_color_purple (__toaster_current_folder)
+  __toaster_color_echo $__toaster_color_pink (__toaster_current_folder)
   __toaster_git_status
   echo
   __toaster_color_echo $__toaster_color_pink "\$ "
