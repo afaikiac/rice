@@ -16,12 +16,13 @@ function __toaster_color_echo
 end
 
 function __toaster_current_folder
-  if test $PWD = '/'
-    echo -n '/'
-  else if test $PWD = $HOME
+  set -l pwd (prompt_pwd)
+  set -l base (basename "$pwd")
+  if test $pwd = "~"
     echo -n 'ᕕ(⌐■_■)ᕗ ♪♬'
   else
-    echo -n $PWD | grep -o -E '[^\/]+$'
+    set -l expr "s|//|/|g"
+    echo -n (echo "$pwd" | sed -e $expr)
   end
 end
 
