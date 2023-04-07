@@ -22,8 +22,12 @@ if status is-interactive
     keychain --dir "$XDG_RUNTIME_DIR" --eval --quiet id_ed25519_github | source
   end
 
-  if __check_conda
-      conda "shell.fish" "hook" | source
+  if test -f "/opt/mambaforge/etc/fish/conf.d/conda.fish"
+    cat "/opt/mambaforge/etc/fish/conf.d/conda.fish" | source
+  end
+
+  if test -f "/opt/mambaforge/etc/fish/conf.d/mamba.fish"
+    cat "/opt/mambaforge/etc/fish/conf.d/mamba.fish" | source
   end
 
 end
