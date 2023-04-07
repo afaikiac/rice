@@ -1,5 +1,9 @@
 local M = {}
 
+-- require'lspconfig'.clangd.setup{
+--   filetypes = { "c", "cpp", "objc", "objcpp", "cuda" }
+-- }
+
 local function setup_clang()
   -- https://github.com/LunarVim/LunarVim/issues/2597#issuecomment-1254764973
   ---@diagnostic disable-next-line: missing-parameter

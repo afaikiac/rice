@@ -16,8 +16,7 @@ lvim.builtin.indentlines.active = false
 lvim.builtin.terminal.active = true
 -- lvim.builtin.dap.active = true
 -- my plugins
-lvim.builtin.time_based_themes = true
-lvim.builtin.sell_your_soul_to_devil = { prada = false }
+lvim.builtin.time_based_themes = false
 lvim.builtin.persistence = { active = false }
 
 --- spellchecker
@@ -81,6 +80,21 @@ local options = {
 
   -- colorcolumn = "80",
   -- colorcolumn = "120",
+  -- formatoptions = {
+  --   ["1"] = true,
+  --   ["2"] = true, -- Use indent from 2nd line of a paragraph
+  --   q = true, -- continue comments with gq"
+  --   c = true, -- Auto-wrap comments using textwidth
+  --   r = true, -- Continue comments when pressing Enter
+  --   n = true, -- Recognize numbered lists
+  --   t = true, -- autowrap lines using text width value
+  --   j = true, -- remove a comment leader when joining lines.
+  --   -- Only break if the line was not longer than 'textwidth' when the insert
+  --   -- started and only at a white character that has been entered during the
+  --   -- current insert command.
+  --   l = true,
+  --   v = true,
+  -- },
 }
 
 for k, v in pairs(options) do

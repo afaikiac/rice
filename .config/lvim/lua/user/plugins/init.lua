@@ -10,26 +10,20 @@ lvim.plugins = {
 		"ellisonleao/gruvbox.nvim",
 		-- lazy = false, priority = 1000,
 		config = function()
-			vim.o.background = "dark"
+			vim.o.background = "light"
 			require("user.plugins.configs.gruvbox")
 			lvim.colorscheme = "gruvbox"
 		end,
 		cond = function()
 			local _time = os.date("*t")
 			return (_time.hour >= 5 and _time.hour < 19) and lvim.builtin.time_based_themes
+				or not lvim.builtin.time_based_themes
 		end,
+		-- enabled = false,
 	},
 	{
 		"rebelot/kanagawa.nvim",
-		config = function()
-			vim.o.background = "dark"
-			lvim.colorscheme = "kanagawa"
-		end,
-		cond = function()
-			local _time = os.date("*t")
-			return ((_time.hour >= 19 and _time.hour < 24) or (_time.hour >= 0 and _time.hour < 5))
-				and lvim.builtin.time_based_themes
-		end,
+		-- enabled = false,
 	},
 	{
 		"rose-pine/neovim",
@@ -41,6 +35,15 @@ lvim.plugins = {
 	{
 		"catppuccin/nvim",
 		name = "catppuccin",
+		config = function()
+			vim.o.background = "light"
+			lvim.colorscheme = "catppuccin-latte"
+		end,
+		cond = function()
+			local _time = os.date("*t")
+			return ((_time.hour >= 19 and _time.hour < 24) or (_time.hour >= 0 and _time.hour < 5))
+				and lvim.builtin.time_based_themes
+		end,
 	},
 	{
 		"LukasPietzschmann/telescope-tabs",
@@ -54,27 +57,8 @@ lvim.plugins = {
 		config = function()
 			require("user.plugins.configs.openbrowser")
 		end,
+		enabled = false,
 	},
-	{
-		"zbirenbaum/copilot.lua",
-		event = { "VimEnter" },
-		config = function()
-			require("user.plugins.configs.copilot")
-		end,
-		enabled = lvim.builtin.sell_your_soul_to_devil.prada,
-	},
-	{
-		"zbirenbaum/copilot-cmp",
-		config = function()
-			require("user.plugins.configs.copilot-cmp")
-		end,
-		dependencies = { "zbirenbaum/copilot.lua", "hrsh7th/nvim-cmp" },
-		enabled = lvim.builtin.sell_your_soul_to_devil.prada,
-	},
-	-- {
-	-- 	"Exafunction/codeium.vim",
-	-- 	enabled = false,
-	-- },
 	{
 		"ray-x/lsp_signature.nvim",
 		event = { "BufRead", "BufNew" },
@@ -120,11 +104,11 @@ lvim.plugins = {
 	},
 	{
 		"epwalsh/obsidian.nvim",
-    -- 02-04-23 cmp completions don't work
+		-- 02-04-23 cmp completions don't work
 		config = function()
 			require("user.plugins.configs.obsidian")
 		end,
-    enabled = false,
+		-- enabled = false,
 	},
 	{
 		"iamcco/markdown-preview.nvim",
@@ -137,7 +121,7 @@ lvim.plugins = {
 	},
 	{
 		"goerz/jupytext.vim",
-		event = "VeryLazy",
+		-- event = "VeryLazy",
 		init = function()
 			require("user.plugins.configs.jupytext")
 		end,
@@ -173,6 +157,7 @@ lvim.plugins = {
 		config = function()
 			require("user.plugins.configs.mason-tool-installer")
 		end,
+		dependencies = { "williamboman/mason.nvim" },
 	},
 	{
 		"kdheepak/cmp-latex-symbols",
@@ -204,6 +189,30 @@ lvim.plugins = {
 			require("user.plugins.configs.vim-easy-align")
 		end,
 	},
+	{
+		"quarto-dev/quarto-nvim",
+		dependencies = {
+			"jmbuhr/otter.nvim",
+			"neovim/nvim-lspconfig",
+		},
+		config = function()
+			require("quarto").setup({
+				lspFeatures = {
+					enabled = true,
+					languages = { "r", "python", "julia" },
+					diagnostics = {
+						enabled = true,
+						triggers = { "BufWrite" },
+					},
+					completion = {
+						enabled = true,
+					},
+				},
+			})
+		end,
+	},
+	-- TODO: https://github.com/jpalardy/vim-slime
+	-- https://github.com/jmbuhr/quarto-nvim-kickstarter
 	-- {
 	--   -- enable builtin spellchecker for buffers with tree-sitter highlighting
 	--   -- see https://github.com/lewis6991/spellsitter.nvim

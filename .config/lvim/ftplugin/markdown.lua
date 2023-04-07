@@ -1,7 +1,5 @@
-local options = {
-  spell = true,
-}
-
-for k, v in pairs(options) do
-  vim.opt_local[k] = v
-end
+-- vim.keymap.set('n', '<Tab>', ':MkdnNextLink<CR>')
+-- vim.keymap.set('n', '<S-Tab>', ':MkdnPrevLink<CR>')
+-- vim.keymap.set('n', ']]', ':MkdnNextHeading<CR>')
+-- vim.keymap.set('n', '[[', ':MkdnPrevHeading<CR>')
+-- vim.keymap.set({'n', 'v'}, '<CR>', ':ObsidianFollowLink<CR>')
