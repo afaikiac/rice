@@ -1,9 +1,9 @@
 module My.Scratchpads
     (
       myScratchpadManageHook
-    , myEmulatorScratchpadAction
     , myTopScratchpadAction
-    , myTelegramScratchpadAction
+    , myEmulatorScratchpadAction
+    -- , myTelegramScratchpadAction
     ) where
 
 import XMonad.StackSet as W
@@ -13,58 +13,29 @@ import XMonad.Util.NamedScratchpad
 import My.Vars (myTerminal)
 
 myScratchpadManageHook = namedScratchpadManageHook myScratchPads
-myEmulatorScratchpadAction = namedScratchpadAction myScratchPads "emulator" 
 myTopScratchpadAction = namedScratchpadAction myScratchPads "top" 
-myTelegramScratchpadAction = namedScratchpadAction myScratchPads "telegram" 
+myEmulatorScratchpadAction = namedScratchpadAction myScratchPads "emulator" 
+-- myTelegramScratchpadAction = namedScratchpadAction myScratchPads "telegram" 
 
 -- interesting https://github.com/gvolpe/nix-config/blob/6f9dbfe73020774a8fe6c5ba0bf9a15157e89019/home/programs/xmonad/config.hs#L461
 myScratchPads :: [NamedScratchpad]
 myScratchPads =
-    [ NS "emulator" spawnTerm findTerm manageTerm
-    , NS "top" spawnTop findTop manageTop
-    , NS "telegram" spawnTelegram findTelegram manageTelegram
-    -- , NS "calculator" spawnCalc findCalc manageCalc
+    [ NS 
+        "top"
+        (myTerminal ++ " -t top-scratchpad" ++ " -e tmux new -Assys btop")
+        (title =? "top-scratchpad")
+        (customFloating $ W.RationalRect (0.98 - 0.56) (0.98 - 0.67) (0.56) (0.67))
+    , NS 
+        "emulator"
+        (myTerminal ++ " -t emulator" ++ " -e tmux new -Asbase")
+        (title =? "emulator")
+        (customFloating $ W.RationalRect (0.95 - 0.48) (0.95 - 0.51) (0.48) (0.51))
+    -- , NS 
+    --     "telegram"
+    --     "telegram-desktop"
+    --     (className =? "TelegramDesktop")
+    --     (customFloating $ W.RationalRect (0.84 - 0.3) (0.04 - 0.5) (0.3) (0.5))
     ]
-  where
-    spawnTerm = myTerminal ++ " -t emulator" ++ " -e tmux new -Asbase"
-    findTerm = title =? "emulator"
-    manageTerm = customFloating $ W.RationalRect l t w h
-    -- manageTerm = doFloat
-    -- manageTerm =  customFloatinga 
-      where
-        h = 0.51
-        w = 0.48
-        t = 0.95 - h
-        l = 0.95 - w
-    spawnTop = myTerminal ++ " -t top-scratchpad" ++ " -e tmux new -Assys btop"
-    findTop = title =? "top-scratchpad"
-    manageTop = customFloating $ W.RationalRect l t w h
-    -- manageTop = doFloat
-      where
-        h = 0.67
-        w = 0.56
-        t = 0.98 - h
-        l = 0.98 - w
-    spawnTelegram = "telegram-desktop"
-    findTelegram = className =? "TelegramDesktop"
-    manageTelegram = customFloating $ W.RationalRect l t w h
-    -- manageTelegram = doFloat
-      where
-        h = 0.5
-        w = 0.3
-        t = 0.04
-        l = 0.84 - w
-
--- spawnCalc  = "qalculate-gtk"
--- findCalc   = className =? "Qalculate-gtk"
--- manageCalc = customFloating $ W.RationalRect l t w h
---            where
---              h = 0.5
---              w = 0.4
---              t = 0.75 -h
---              l = 0.70 -w
-
-
 
 -- focusedScreenDimensions :: X Rectangle
 -- focusedScreenDimensions = withWindowSet (return . screenRect . W.screenDetail . W.current)

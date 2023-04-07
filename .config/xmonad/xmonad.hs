@@ -3,19 +3,25 @@ import XMonad.Hooks.EwmhDesktops (ewmh) -- for some fullscreen events, also for 
 import XMonad.Hooks.ManageDocks (docks, manageDocks)
 import XMonad.Hooks.SetWMName (setWMName)
 import XMonad.Hooks.WorkspaceHistory (workspaceHistoryHook)
+import XMonad.Hooks.RefocusLast 
+    (
+      refocusLastLayoutHook
+    , refocusLastLogHook
+    , refocusLastWhen
+    , isFloat
+    , refocusingIsActive
+    )
 import XMonad.Layout.Fullscreen 
     (
       fullscreenEventHook
     , fullscreenManageHook
     )
-import XMonad.Layout.ShowWName (showWName')
 import XMonad.Util.EZConfig (additionalKeysP)
 import XMonad.Util.SpawnOnce (spawnOnce)
 
-import My.Theme.Light
+import My.Theme.GruvboxLight
     (
-      myShowWNameTheme
-    , myNormalBorderColor
+      myNormalBorderColor
     , myFocusedBorderColor
     , myBorderWidth
     )
@@ -38,6 +44,9 @@ myStartupHook = do
     spawnOnce "picom --config $HOME/.config/picom/picom.conf"
     setWMName "LG3D"
 
+-- FIXME:I have sublayout in xmonad. When I focus window in sublayout,
+-- then open float window and move it to another workspace, focus on
+-- sublayout changes. How fixes this problem?
 
 main :: IO ()
 main = do
@@ -48,10 +57,10 @@ main = do
         ewmh $
         def
             { -- https://hackage.haskell.org/package/xmonad-contrib-0.17.0/docs/XMonad-Layout-Fullscreen.html
-              handleEventHook = fullscreenEventHook
-            , layoutHook = showWName' myShowWNameTheme $ myLayoutHook
+              handleEventHook = refocusLastWhen (refocusingIsActive <||> isFloat) <+> fullscreenEventHook
+            , layoutHook =  refocusLastLayoutHook $ myLayoutHook
             , manageHook = myManageHook <+> manageDocks <+> fullscreenManageHook
-            , logHook = workspaceHistoryHook
+            , logHook = refocusLastLogHook <+> workspaceHistoryHook
             , modMask = myModMask
             , terminal = myTerminal
             , startupHook = myStartupHook

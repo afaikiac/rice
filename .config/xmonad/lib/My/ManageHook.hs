@@ -14,6 +14,7 @@ import XMonad.Hooks.ManageHelpers
 import My.Scratchpads (myScratchpadManageHook)
 import My.Utils (checkDialog)
 
+
 -- 'doFloat' forces a window to float.  Useful for dialog boxes and such.
 -- xprop | grep WM_CLASS
 myManageHook :: XMonad.Query (Data.Monoid.Endo WindowSet)

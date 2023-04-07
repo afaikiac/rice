@@ -25,9 +25,9 @@ import My.Workspaces (myWorkspacesGreedyView, myWorkspacesShift)
 import My.Vars (myTerminal, myBrowser)
 import My.Scratchpads
     (
-      myEmulatorScratchpadAction
-    , myTopScratchpadAction
-    , myTelegramScratchpadAction
+      myTopScratchpadAction
+    , myEmulatorScratchpadAction
+    -- , myTelegramScratchpadAction
     )
 
 myKeymap :: [(String, X ())]
@@ -40,12 +40,15 @@ myKeymap =
     , ("M-<Return>", spawn (myTerminal))
     , ("M-S-<Return>", spawn "alacritty --config-file .config/alacritty/nvim.yml")
     -- , ("M-C-S-l", spawn "xscreensaver-command -lock")
-    , ("M-b", spawn (myBrowser))
-    , ("C-g r", spawn (myTerminal ++ "-e lf"))
+    -- , ("M-b", spawn (myBrowser))
+    -- , ("C-g r", spawn (myTerminal ++ "-e lf"))
     , ("C-g f", spawn "pcmanfm")
-    , ("C-g b", spawn "md.obsidian.Obsidian")
+    -- , ("C-g b", spawn "md.obsidian.Obsidian")
+    , ("C-g b", spawn (myBrowser))
+    -- , ("C-g t", spawn (myTerminal ++ " -t emulator" ++ " -e tmux new -Asbase"))
+    , ("C-g m", spawn "telegram-desktop")
     , ("M-v", spawn ("copyq show"))
-    , ("M--", spawn "microphone-toggle")
+    , ("M-`", spawn "microphone-toggle")
 
     -- KB_GROUP PrtSc
     , ("<Print>", spawn ("screenshot-selection"))
@@ -54,8 +57,8 @@ myKeymap =
 
     -- KB_GROUP named scratchpads
     , ("M-g", myEmulatorScratchpadAction)
-    , ("M-s", myTopScratchpadAction)
-    , ("C-g t", myTelegramScratchpadAction)
+    , ("C-g s", myTopScratchpadAction)
+    -- , ("C-g t", myTelegramScratchpadAction)
 
     -- KB_GROUP Floating windows
     , ("M-t", withFocused $ windows . W.sink) -- Push floating window back to tile
