@@ -21,6 +21,6 @@ if status is-interactive
     alias cambl="camb l | fzf --preview 'camb {}'"
   end
 
-  alias rm="gio trash"
+  alias trash="gio trash"
 
 end
