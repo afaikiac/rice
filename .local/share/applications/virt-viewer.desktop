@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=virt-viewer
+Comment=Display the graphical console for a virtual machine
+TryExec=virt-viewer
+Exec=virt-viewer
+Terminal=false
+Type=Application
+Categories=System;Emulator;

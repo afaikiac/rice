@@ -1,0 +1,111 @@
+#!/usr/bin/env bash
+
+temp_file=$(mktemp)
+
+cleanup() {
+	if [[ -s "$temp_file" ]]; then
+		temp_dir=$(<"$temp_file")
+		echo -e "\n$temp_dir"
+	fi
+	rm -f "$temp_file"
+	exit 0
+}
+
+create_temp_dir() {
+	local temp=$(mktemp -d)
+	echo "$temp" >"$temp_file"
+	echo "$temp"
+}
+
+get_data_pair() {
+	local count=$1
+	local dir=$2
+	echo "in$count (^D):"
+	cat >"$dir/in$count"
+	echo "out$count (^D):"
+	cat >"$dir/out$count"
+}
+
+watch_directory() {
+	local dir=$1
+	local last_file=$(ls -1v "$dir/in"* 2>/dev/null | tail -n 1)
+	local next_num
+	if [ -z "$last_file" ]; then
+		next_num=1
+	else
+		next_num=$(($(echo "$last_file" | grep -oP '\d+$') + 1))
+	fi
+	echo "$next_num"
+}
+
+run_executable() {
+	local dir=$1
+	local executable=$2
+	for input_file in "$dir/in"*; do
+		local output_file="$dir/out${input_file##*in}"
+		if [ -f "$output_file" ]; then
+			local expected_output=$(<"$output_file")
+			local actual_output=$("$executable" <"$input_file")
+			local diff_output=$(colordiff -y --suppress-common-lines <(echo "$expected_output") <(echo "$actual_output"))
+
+			if [ -z "$diff_output" ]; then
+				echo "[PASS] $(basename "$input_file") and $(basename "$output_file")"
+			else
+				echo "[FAIL] $(basename "$input_file") and $(basename "$output_file"):"
+				echo "$diff_output"
+			fi
+		else
+			local actual_output=$("$executable" <"$input_file")
+			echo "[OUT] $(basename "$input_file")"
+			echo "$actual_output"
+		fi
+
+	done
+}
+
+print_help() {
+	echo "Usage: $(basename "$0") [DIRECTORY] [EXECUTABLE]"
+	echo "DIRECTORY (optional): Specifies the directory containing the input and output files."
+	echo "EXECUTABLE (optional): Specifies the executable file to test against the input files."
+	echo "If no arguments are specified, a temporary directory will be created."
+}
+
+main() {
+	if [[ $1 = -h || $1 = --help ]]; then
+		print_help
+		exit 0
+	elif [[ $# -eq 0 ]]; then
+		local temp_dir=$(create_temp_dir)
+		local count=1
+		while true; do
+			get_data_pair $count "$temp_dir"
+			count=$((count + 1))
+		done
+	elif [[ $# -eq 1 ]]; then
+		local dir="$(realpath "$1")"
+		if [ ! -d "$dir" ]; then
+			echo "Error: $dir is not a valid directory."
+			exit 1
+		fi
+		local count=$(watch_directory "$dir")
+		while true; do
+			get_data_pair $count "$dir"
+			count=$((count + 1))
+		done
+	elif [[ $# -eq 2 ]]; then
+		local dir="$(realpath "$1")"
+		if [ ! -d "$dir" ]; then
+			echo "Error: $dir is not a valid directory."
+			exit 1
+		fi
+		local executable="$(realpath "$2")"
+		if [ ! -x "$executable" ]; then
+			echo "Error: $executable is not an executable file."
+			exit 1
+		fi
+		run_executable "$dir" "$executable"
+	fi
+}
+
+trap 'cleanup' SIGINT
+main "$@"
