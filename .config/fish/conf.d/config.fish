@@ -1,6 +1,10 @@
 if status is-interactive
 
   set -U fish_greeting
+  
+  if test -f "$__fish_config_dir/prompts/asciish.fish" 
+    cat "$__fish_config_dir/prompts/asciish.fish" | source
+  end
 
   fish_vi_key_bindings
   # emulates vim's cursor shape behavior
