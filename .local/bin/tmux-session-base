@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+tmux has-session -t base 2>/dev/null
+
+if [ $? -ne 0 ]; then
+	tmux new-session -d -s base -n fish
+
+	tmux new-window -t base -n lf
+	tmux send-keys -t base:lf 'lf' C-m
+	tmux split-window -t base:lf -v
+	tmux send-keys -t base:lf.1 'lf' C-m
+	tmux select-pane -t base:lf.0
+
+	tmux select-window -t base:fish
+fi
+
+tmux attach-session -t base
