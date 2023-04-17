@@ -1,17 +1,21 @@
 #!/usr/bin/env bash
 
-tmux has-session -t base 2>/dev/null
+session_name="base"
+
+tmux has-session -t "$session_name" 2>/dev/null
 
 if [ $? -ne 0 ]; then
-	tmux new-session -d -s base -n fish
+	shell_name="$(basename "$SHELL")"
+	
+	filemanager="$SHELL"
+	if command -v lf &>/dev/null; then
+		filemanager="lf"
+	fi
 
-	tmux new-window -t base -n lf
-	tmux send-keys -t base:lf 'lf' C-m
-	tmux split-window -t base:lf -v
-	tmux send-keys -t base:lf.1 'lf' C-m
-	tmux select-pane -t base:lf.0
+	tmux new-session -d -s "$session_name" -n "$shell_name"
 
-	tmux select-window -t base:fish
+	tmux split-window -bZ -t "$session_name":"$shell_name" -v
+	tmux send-keys -t "$session_name":"$shell_name".1 "$filemanager" C-m
 fi
 
-tmux attach-session -t base
+tmux attach-session -t "$session_name"

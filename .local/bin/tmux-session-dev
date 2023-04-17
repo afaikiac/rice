@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+work_dir="${1:-$(mktemp -d ~/code/XXXX)}"
+
+if ! test -d work_dir; then
+	mkdir -p "$work_dir"
+fi
+
+session_name="${2:-dev-$(basename "$work_dir")}"
+
+tmux has-session -t "$session_name" 2>/dev/null
+
+if [ $? -ne 0 ]; then
+	shell_name="$(basename "$SHELL")"
+	
+	if command -v lvim &>/dev/null; then
+		EDITOR="lvim"
+	fi
+
+	filemanager="$SHELL"
+	if command -v lf &>/dev/null; then
+		filemanager="lf"
+	fi
+	
+	tmux new-session -d -c "$work_dir" -s "$session_name" -n "$shell_name"
+	tmux split-window -c "$work_dir" -t "$session_name":"$shell_name" -v
+	tmux split-window -c "$work_dir" -t "$session_name":"$shell_name".0 -h
+	tmux send-keys -t "$session_name":"$shell_name".2 "$filemanager" C-m
+	tmux select-pane -t "$session_name":"$shell_name".0
+
+	tmux new-window -c "$work_dir" -t "$session_name" -n "$EDITOR"
+	tmux split-window -bZ -t "$session_name":"$EDITOR" -v
+	tmux send-keys -t "$session_name":"$EDITOR".0 "$EDITOR" C-m
+fi
+
+tmux attach-session -t "$session_name"
