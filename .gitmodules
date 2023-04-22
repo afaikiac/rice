@@ -4,6 +4,3 @@
 [submodule ".config/xmonad/xmonad"]
 	path = .config/xmonad/xmonad
 	url = https://github.com/xmonad/xmonad.git
-[submodule ".local/share/pyenv/plugins/pyenv-virtualenv"]
-	path = .local/share/pyenv/plugins/pyenv-virtualenv
-	url = https://github.com/pyenv/pyenv-virtualenv.git
