@@ -42,7 +42,7 @@ if command -v alacritty &>/dev/null; then
 	export TERMINAL="alacritty -e "
 fi
 
-if command -v fish &>/dev/null; then
+if command -v /usr/bin/fish &>/dev/null; then
 	export SHELL="/usr/bin/fish"
 fi
 
@@ -82,9 +82,8 @@ export WGETRC="$XDG_CONFIG_HOME/wget/wgetrc"
 # Greeter for xinit
 if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
 	printf "\n"
-	read -p "Hi, man! Do you want to access Xmonad? [Y/n]: " -n 1 -r
-	printf "\n"
-	if [[ $REPLY =~ ^[yY]$ ]]; then
+	read -p "Hi, man! Do you want to access XMonad? [Y/n] "
+	if [[ $REPLY =~ ^[yY]$ ]] || [[ -z $REPLY ]]; then
 		exec xinit xmonad
 	fi
 fi
