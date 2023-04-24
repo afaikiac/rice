@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=XSecureLock
+Comment=Locks the screen with a password prompt
+Exec=env XSECURELOCK_PASSWORD_PROMPT=time xsecurelock
+TryExec=xsecurelock
+Icon=system-lock-screen
+Categories=System;
