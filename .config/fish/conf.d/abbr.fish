@@ -1,5 +1,12 @@
 if status is-interactive
 
+  abbr --position anywhere timestamp "date --utc +%Y-%m-%d-%H%M%S"
+  abbr --position anywhere datestamp "date --utc +%Y-%m-%d"
+
+  abbr --position anywhere clip "xclip -selection clipboard"
+
+  abbr git-config-user-info "git config user.name && git config user.email"
+
   abbr --position anywhere S  "systemctl"
   abbr SS "sudo systemctl"
 

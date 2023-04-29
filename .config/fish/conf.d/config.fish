@@ -19,7 +19,9 @@ if status is-interactive
 
   if type -q "pyenv"
     pyenv init --no-rehash - | source
-    pyenv virtualenv-init - | source
+    if test -d "$(pyenv root)/plugins/pyenv-virtualenv"
+      pyenv virtualenv-init - | source
+    end
   end
 
   if type -q "keychain"
