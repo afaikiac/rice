@@ -72,10 +72,12 @@ export TEXMFVAR="$XDG_CACHE_HOME/texlive/texmf-var"
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
 export ANSIBLE_HOME="$XDG_DATA_HOME/ansible"
 export WGETRC="$XDG_CONFIG_HOME/wget/wgetrc"
+export XCOMPOSEFILE="$XDG_CONFIG_HOME/X11/xcompose"
 
 # xorg
 export XINITRC="$XDG_CONFIG_HOME/X11/xinitrc"
 export XSERVERRC="$XDG_CONFIG_HOME/X11/xserverrc"
+export XAUTHORITY="$XDG_RUNTIME_DIR/.Xauthority"
 
 # Greeter for xinit
 if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then

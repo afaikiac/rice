@@ -1,16 +1,15 @@
+#!/bin/sh
+
 export XCURSOR_SIZE=29
-export XAUTHORITY="$XDG_RUNTIME_DIR/.Xauthority"
-export XCOMPOSEFILE="$XDG_CONFIG_HOME/X11/xcompose"
 
 env XSECURELOCK_PASSWORD_PROMPT=time xss-lock xsecurelock &
 xsetroot -cursor_name left_ptr &
-xkbcomp $HOME/.config/X11/xkbrc $DISPLAY >/dev/null &
-# xset r rate 250 45 -display $DISPLAY &
+xkbcomp $HOME/.config/X11/xkbrc $DISPLAY &>/dev/null &
 layout-auto &
-
 dunst -conf $HOME/.config/dunst/dunstrc &
 copyq &
+# xset r rate 250 45 -display $DISPLAY &
 
-if [ -d "/sys/class/power_supply/BAT"* ]; then
-    cbatticon &
+if test -d "/sys/class/power_supply/BAT"*; then
+	cbatticon &
 fi
