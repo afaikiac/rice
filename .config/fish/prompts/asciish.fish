@@ -1,10 +1,18 @@
-set __asciish_color_black   brwhite
-set __asciish_color_green   green
-set __asciish_color_yellow  bryellow
-set __asciish_color_blue    blue
-set __asciish_color_magenta magenta
-set __asciish_color_cyan    cyan
-set __asciish_color_gray    white
+function __asciish_set_color
+  if test -n (set_color --print-colors | grep "^$argv[2]\$")
+    set -g $argv[1] $argv[2]
+  else
+    set -g $argv[1] normal
+  end
+end
+
+__asciish_set_color __asciish_color_black   normal
+__asciish_set_color __asciish_color_green   green
+__asciish_set_color __asciish_color_yellow  bryellow
+__asciish_set_color __asciish_color_blue    blue
+__asciish_set_color __asciish_color_magenta magenta
+__asciish_set_color __asciish_color_cyan    cyan
+__asciish_set_color __asciish_color_gray    white
 
 function __asciish_color_echo
   set_color $argv[1]
