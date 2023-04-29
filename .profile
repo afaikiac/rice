@@ -10,7 +10,7 @@ if command -v ruby &>/dev/null; then
 	export PATH=$PATH:$GEM_HOME/bin
 fi
 
-# Home
+# Home bin
 export PATH=$HOME/.local/bin:$PATH
 
 # Rust
@@ -57,12 +57,6 @@ export LIBVIRT_DEFAULT_URI="qemu:///system"
 export PASSWORD_STORE_ENABLE_EXTENSIONS=true
 export PASSWORD_STORE_DIR="$XDG_DATA_HOME/pass"
 
-# xorg
-export XCURSOR_SIZE=29
-export XAUTHORITY="$XDG_RUNTIME_DIR/.Xauthority"
-export XINITRC="$XDG_CONFIG_HOME/X11/xinitrc"
-export XSERVERRC="$XDG_CONFIG_HOME/X11/xserverrc"
-
 # ~/. clean up
 export PARU_CONF="$XDG_CONFIG_HOME/paru/paru.conf"
 export HISTFILE="$XDG_STATE_HOME/bash/history"
@@ -78,6 +72,10 @@ export TEXMFVAR="$XDG_CACHE_HOME/texlive/texmf-var"
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
 export ANSIBLE_HOME="$XDG_DATA_HOME/ansible"
 export WGETRC="$XDG_CONFIG_HOME/wget/wgetrc"
+
+# xorg
+export XINITRC="$XDG_CONFIG_HOME/X11/xinitrc"
+export XSERVERRC="$XDG_CONFIG_HOME/X11/xserverrc"
 
 # Greeter for xinit
 if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
