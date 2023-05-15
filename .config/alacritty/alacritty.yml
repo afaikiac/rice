@@ -12,9 +12,10 @@ scrolling:
 
 font:
   normal:
+    family: JetBrainsMono Nerd Font
     #family: monospace
     #family: TerminessTTF Nerd Font
-    family: SauceCodePro Nerd Font
+    # family: SauceCodePro Nerd Font
     #family: CodeNewRoman Nerd Font
     #family: RobotoMono Nerd Font
     #family: Hack
@@ -66,7 +67,7 @@ font:
     #family: Mononoki Nerd Font
     style: Bold Italic
 
-  size: 14.0
+  size: 12
 
   builtin_box_drawing: true
   # offset:
