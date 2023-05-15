@@ -1,36 +1,53 @@
 #!/usr/bin/env bash
 
-work_dir="${1:-$(mktemp -d ~/code/XXXX)}"
+work_dir="$PWD"
+session_name=""
 
-if ! test -d work_dir; then
+while [[ $# -gt 0 ]]; do
+	case "$1" in
+	-t)
+		session_name="$2"
+		shift 2
+		;;
+	*)
+		work_dir="$(realpath "$1")"
+		shift
+		;;
+	esac
+done
+
+if [ -z "$session_name" ]; then
+	session_name="$(basename "$work_dir")"
+fi
+
+if tmux has-session -t "$session_name" 2>/dev/null; then
+	echo "Error: Session '$session_name' already exists" >&2
+	exit 1
+fi
+
+if ! test -d "$work_dir"; then
 	mkdir -p "$work_dir"
 fi
 
-session_name="${2:-dev-$(basename "$work_dir")}"
+shell_name="$(basename "$SHELL")"
 
-tmux has-session -t "$session_name" 2>/dev/null
-
-if [ $? -ne 0 ]; then
-	shell_name="$(basename "$SHELL")"
-	
-	if command -v lvim &>/dev/null; then
-		EDITOR="lvim"
-	fi
-
-	filemanager="$SHELL"
-	if command -v lf &>/dev/null; then
-		filemanager="lf"
-	fi
-	
-	tmux new-session -d -c "$work_dir" -s "$session_name" -n "$shell_name"
-	tmux split-window -c "$work_dir" -t "$session_name":"$shell_name" -v
-	tmux split-window -c "$work_dir" -t "$session_name":"$shell_name".0 -h
-	tmux send-keys -t "$session_name":"$shell_name".2 "$filemanager" C-m
-	tmux select-pane -t "$session_name":"$shell_name".0
-
-	tmux new-window -c "$work_dir" -t "$session_name" -n "$EDITOR"
-	tmux split-window -bZ -t "$session_name":"$EDITOR" -v
-	tmux send-keys -t "$session_name":"$EDITOR".0 "$EDITOR" C-m
+if command -v lvim &>/dev/null; then
+	EDITOR="lvim"
 fi
+
+filemanager="$SHELL"
+if command -v lf &>/dev/null; then
+	filemanager="lf"
+fi
+
+tmux new-session -d -c "$work_dir" -s "$session_name" -n "$shell_name"
+tmux split-window -v -c "$work_dir" -t "$session_name":"$shell_name"
+tmux split-window -h -c "$work_dir" -t "$session_name":"$shell_name".0
+tmux send-keys -t "$session_name":"$shell_name".2 "$filemanager" C-m
+tmux select-pane -t "$session_name":"$shell_name".0
+
+tmux new-window -c "$work_dir" -t "$session_name" -n "$EDITOR"
+tmux split-window -bvZ -c "$work_dir" -t "$session_name":"$EDITOR"
+tmux send-keys -t "$session_name":"$EDITOR".0 "$EDITOR" C-m
 
 tmux attach-session -t "$session_name"

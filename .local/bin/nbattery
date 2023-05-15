@@ -7,25 +7,25 @@ function get_battery_status() {
 	local current_capacity=$(cat $BATTERY_DIR/capacity)
 
 	if [ "$current_capacity" -le "10" ]; then
-		printf 
+		printf 󰁺
 	elif [ "$current_capacity" -le "20" ]; then
-		printf 
+		printf 󰁻
 	elif [ "$current_capacity" -le "30" ]; then
-		printf 
+		printf 󰁼
 	elif [ "$current_capacity" -le "40" ]; then
-		printf 
+		printf 󰁽
 	elif [ "$current_capacity" -le "50" ]; then
-		printf 
+		printf 󰁾
 	elif [ "$current_capacity" -le "60" ]; then
-		printf 
+		printf 󰁿
 	elif [ "$current_capacity" -le "70" ]; then
-		printf 
+		printf 󰂀
 	elif [ "$current_capacity" -le "80" ]; then
-		printf 
+		printf 󰂁
 	elif [ "$current_capacity" -le "90" ]; then
-		printf 
+		printf 󰂂
 	else
-		printf 
+		printf 󰁹
 	fi
 
 	[ "$current_status" = "Charging" ] && printf 

@@ -6,7 +6,7 @@ tmux has-session -t "$session_name" 2>/dev/null
 
 if [ $? -ne 0 ]; then
 	shell_name="$(basename "$SHELL")"
-	
+
 	filemanager="$SHELL"
 	if command -v lf &>/dev/null; then
 		filemanager="lf"
@@ -14,7 +14,7 @@ if [ $? -ne 0 ]; then
 
 	tmux new-session -d -s "$session_name" -n "$shell_name"
 
-	tmux split-window -bZ -t "$session_name":"$shell_name" -v
+	tmux split-window -bvZ -t "$session_name":"$shell_name"
 	tmux send-keys -t "$session_name":"$shell_name".1 "$filemanager" C-m
 fi
 
