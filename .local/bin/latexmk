@@ -1,0 +1,4 @@
+#!/bin/sh
+
+IMAGE="${LATEXMK_IMAGE:-"ghcr.io/afaikiac/diploma-latex-template"}"
+exec docker run --rm -i --user="$(id -u):$(id -g)" --net=none -v "$PWD":/doc "$IMAGE" latexmk "$@"
