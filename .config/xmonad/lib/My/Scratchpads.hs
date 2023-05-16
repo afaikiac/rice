@@ -27,7 +27,7 @@ myScratchPads =
         (customFloating $ W.RationalRect (0.98 - 0.56) (0.98 - 0.67) (0.56) (0.67))
     , NS 
         "emulator"
-        (myTerminal ++ " -t emulator" ++ " -e tmux new -Asbase")
+        (myTerminal ++ " -t emulator" ++ " -e tmux-session-base")
         (title =? "emulator")
         (customFloating $ W.RationalRect (0.95 - 0.48) (0.95 - 0.51) (0.48) (0.51))
     -- , NS 
