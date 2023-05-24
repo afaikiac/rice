@@ -39,7 +39,7 @@ full_mode() {
 
 print_help() {
 	cat <<EOF
-Usage: \$0 [mode]
+Usage: $(basename "$0") [mode]
 Modes:
   selection - Capture a screenshot of the selected region
   shadow    - Capture a screenshot with a shadow effect
