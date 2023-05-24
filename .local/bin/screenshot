@@ -5,11 +5,9 @@
 set -eu -o pipefail
 
 selection_mode() {
-	window_id=$(xdotool getactivewindow)
-	xdotool key --window "$window_id" XF86Ungrab
+	local selection
 
 	selection=$(hacksaw -f "-i %i -g %g")
-
 	shotgun $selection - |
 		swappy -f - -o - |
 		xclip -t 'image/png' -selection clipboard
