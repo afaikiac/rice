@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# TODO: print empty string if battery dosen't exist
+
 BATTERY_DIR="/sys/class/power_supply/BAT*"
 
 function get_battery_status() {

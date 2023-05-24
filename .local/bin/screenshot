@@ -1,0 +1,78 @@
+#!/usr/bin/env bash
+
+# TODO: freeze screen
+
+set -eu -o pipefail
+
+selection_mode() {
+	window_id=$(xdotool getactivewindow)
+	xdotool key --window "$window_id" XF86Ungrab
+
+	selection=$(hacksaw -f "-i %i -g %g")
+
+	shotgun $selection - |
+		swappy -f - -o - |
+		xclip -t 'image/png' -selection clipboard
+}
+
+shadow_mode() {
+	# see https://www.imagemagick.org/Usage/blur/#shadow_offset
+	# see https://www.imagemagick.org/Usage/thumbnails/#rounded
+	local selection
+
+	selection=$(hacksaw -f "-i %i -g %g")
+	shotgun $selection - |
+		convert - \( +clone -background black -shadow 60x20+0+0 \) +swap \
+			-background white -layers merge +repage \
+			-format png - |
+		swappy -f - -o - |
+		xclip -t 'image/png' -selection clipboard
+}
+
+full_mode() {
+	local dir=$1
+	local filename=$2
+
+	shotgun -f png "$dir/$filename"
+	xclip -t 'image/png' -selection clipboard <"$dir/$filename"
+}
+
+print_help() {
+	cat <<EOF
+Usage: \$0 [mode]
+Modes:
+  selection - Capture a screenshot of the selected region
+  shadow    - Capture a screenshot with a shadow effect
+  full      - Capture a full-screen screenshot
+EOF
+}
+
+main() {
+	local mode="${1:-selection}"
+
+	case "$mode" in
+	selection)
+		selection_mode
+		;;
+	shadow)
+		shadow_mode
+		;;
+	full)
+		local dir=$HOME/Pictures
+		local timestamp=$(date --utc +%Y-%m-%d-%H%M%S)
+		local filename=shot_full_"$timestamp".png
+		full_mode "$dir" "$filename"
+		;;
+	-h | --help)
+		print_help
+		exit 0
+		;;
+	*)
+		echo "Invalid mode: $mode"
+		print_help
+		exit 1
+		;;
+	esac
+}
+
+main "$@"
