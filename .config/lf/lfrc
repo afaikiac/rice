@@ -31,11 +31,11 @@ set scrolloff 10
 # Previews with ctpv
 # TODO: Possible vulnerabilities in a preview parsers. Recheck!
 # https://github.com/gokcehan/lf/wiki/Previews#with-stpv-and-ctpv
-# paru -S ctpv-git ueberzug
+# paru -S ctpv-git
 set previewer ctpv
 set cleaner ctpvclear
 &ctpv -s $id
-&ctpvquit $id
+cmd on-quit $ctpv -e $id
 
 # Automatically quit server when there are no clients left connected.
 set autoquit on
@@ -59,11 +59,11 @@ cmd open ${{
     case $(file --mime-type -Lb $f) in
         */x-gtar|*/zip|*/x-iso9660-image|*/x-bzip2|*/x-7z-compressed|*/x-rar-compressed)
         # see https://en.wikipedia.org/wiki/List_of_archive_formats
-            mntdir="$f-archivemount"
+            mntdir="$f-fuse-archive"
             [ ! -d "$mntdir" ] && {
                 mkdir "$mntdir"
-                archivemount "$f" "$mntdir"
-                echo "$mntdir" >> "/tmp/__lf_archivemount_$id"
+                fuse-archive "$f" "$mntdir"
+                echo "$mntdir" >> "/tmp/__lf_fuse_archive_$id"
             }
             lf -remote "send $id cd \"$mntdir\""
             lf -remote "send $id reload"
