@@ -7,13 +7,9 @@ require "user.lsp.languages.python"
 require "user.lsp.languages.sh"
 require "user.lsp.languages.tex"
 
-lvim.lsp.diagnostics.float.focusable = true
-
-lvim.lsp.diagnostics.virtual_text = false
 vim.diagnostic.config({
   virtual_text = false,
 })
-
 
 local linters = require "lvim.lsp.null-ls.linters"
 linters.setup {

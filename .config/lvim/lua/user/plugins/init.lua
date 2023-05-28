@@ -149,8 +149,11 @@ lvim.plugins = {
 		enabled = lvim.builtin.persistence.active,
 	},
 	{
-		"christoomey/vim-tmux-navigator",
-		cond = os.getenv("TMUX") ~= nil,
+		"afaikiac/vim-tmux-navigator",
+		-- cond = os.getenv("TMUX") ~= nil,
+		config = function()
+			require("user.plugins.configs.vim-tmux-navigator")
+		end,
 	},
 	{
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
@@ -189,28 +192,28 @@ lvim.plugins = {
 			require("user.plugins.configs.vim-easy-align")
 		end,
 	},
-	{
-		"quarto-dev/quarto-nvim",
-		dependencies = {
-			"jmbuhr/otter.nvim",
-			"neovim/nvim-lspconfig",
-		},
-		config = function()
-			require("quarto").setup({
-				lspFeatures = {
-					enabled = true,
-					languages = { "r", "python", "julia" },
-					diagnostics = {
-						enabled = true,
-						triggers = { "BufWrite" },
-					},
-					completion = {
-						enabled = true,
-					},
-				},
-			})
-		end,
-	},
+	-- {
+	-- 	"quarto-dev/quarto-nvim",
+	-- 	dependencies = {
+	-- 		"jmbuhr/otter.nvim",
+	-- 		"neovim/nvim-lspconfig",
+	-- 	},
+	-- 	config = function()
+	-- 		require("quarto").setup({
+	-- 			lspFeatures = {
+	-- 				enabled = true,
+	-- 				languages = { "r", "python", "julia" },
+	-- 				diagnostics = {
+	-- 					enabled = true,
+	-- 					triggers = { "BufWrite" },
+	-- 				},
+	-- 				completion = {
+	-- 					enabled = true,
+	-- 				},
+	-- 			},
+	-- 		})
+	-- 	end,
+	-- },
 	-- TODO: https://github.com/jpalardy/vim-slime
 	-- https://github.com/jmbuhr/quarto-nvim-kickstarter
 	-- {

@@ -1,10 +1,10 @@
 local M = {}
 
-M.set_openbrowser_mappings = function ()
-  vim.g["netrw_nogx"] = 1
-  lvim.lsp.buffer_mappings.normal_mode["gx"] = { "<Plug>(openbrowser-smart-search)", "Browser Search" }
-  lvim.lsp.buffer_mappings.visual_mode["gx"] = { "<Plug>(openbrowser-smart-search)", "Browser Search" }
-end
+-- M.set_openbrowser_mappings = function ()
+--   vim.g["netrw_nogx"] = 1
+--   lvim.lsp.buffer_mappings.normal_mode["gx"] = { "<Plug>(openbrowser-smart-search)", "Browser Search" }
+--   lvim.lsp.buffer_mappings.visual_mode["gx"] = { "<Plug>(openbrowser-smart-search)", "Browser Search" }
+-- end
 
 M.set_iron_mappings = function ()
   -- keymap for hydrogen format

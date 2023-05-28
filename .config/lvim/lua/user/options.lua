@@ -25,6 +25,9 @@ vim.opt.spell = false
 vim.opt.spelllang = { "en_us", "ru_yo" }
 vim.g["spellfile_URL"] = "https://ftp.nluug.nl/vim/runtime/spell"
 
+-- https://github.com/nvim-tree/nvim-tree.lua#quick-start
+-- vim.g.loaded_netrw = 1
+-- vim.g.loaded_netrwPlugin = 1
 -- vim.g.netrw_browse_split = 0
 -- vim.g.netrw_banner = 0
 -- vim.g.netrw_winsize = 25

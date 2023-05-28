@@ -1,1 +1,1 @@
-vim.cmd("call vimtex#init()")
+-- vim.cmd("call vimtex#init()")
