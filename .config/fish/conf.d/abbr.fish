@@ -7,6 +7,8 @@ if status is-interactive
 
   abbr git-config-user-info "git config user.name && git config user.email"
 
+  abbr ssh-keygen-public "ssh-keygen -y -f ~/.ssh/"
+
   abbr --position anywhere S  "systemctl"
   abbr SS "sudo systemctl"
 

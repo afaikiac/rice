@@ -5,13 +5,13 @@ function lfcd
 
     set id (cat $fid)
     rm -f $fid
-    set archivemount_dir "/tmp/__lf_archivemount_$id"
-    if test -f "$archivemount_dir"
-        cat "$archivemount_dir" | while read -L line
+    set fuse_dir "/tmp/__lf_fuse_archive_$id"
+    if test -f "$fuse_dir"
+        cat "$fuse_dir" | while read -L line
             fusermount -u "$line"
             rmdir "$line"
         end
-        rm -f "$archivemount_dir"
+        rm -f "$fuse_dir"
     end              
             
     set dir (cat $tmp)

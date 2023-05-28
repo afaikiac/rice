@@ -25,7 +25,7 @@ if status is-interactive
   end
 
   if type -q "keychain"
-    keychain --dir "$XDG_RUNTIME_DIR" --eval --quiet id_ed25519_github | source
+    keychain --dir "$XDG_RUNTIME_DIR" --eval --quiet id_ed25519_github_afaikiac | source
   end
 
   if test -f "/opt/mambaforge/etc/fish/conf.d/conda.fish"
