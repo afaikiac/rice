@@ -51,9 +51,9 @@ myKeymap =
     , ("M-`", spawn "microphone-toggle")
 
     -- KB_GROUP PrtSc
-    , ("<Print>", spawn ("screenshot-selection"))
-    , ("C-<Print>", spawn ("screenshot-selection shadow"))
-    , ("S-<Print>", spawn ("screenshot-selection full"))
+    , ("<Print>", spawn ("screenshot"))
+    , ("C-<Print>", spawn ("screenshot shadow"))
+    , ("S-<Print>", spawn ("screenshot full"))
 
     -- KB_GROUP named scratchpads
     , ("M-g", myEmulatorScratchpadAction)
