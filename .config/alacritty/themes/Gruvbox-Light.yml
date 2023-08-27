@@ -1,6 +1,4 @@
-# Colors (Gruvbox light)
 colors:
-  # Default colors
   primary:
     # hard contrast: background = '#f9f5d7'
     background: '#fbf1c7'
@@ -8,7 +6,10 @@ colors:
     # foreground: '#3c3836'
     foreground: '#32302f'
 
-  # Normal colors
+  # cursor:
+  #   text: '0x000000'
+  #   cursor: '0xffffff'
+
   normal:
     # black:   '#fbf1c7'
     # red:     '#cc241d'
@@ -27,7 +28,6 @@ colors:
     cyan:    '#3A6B4D'
     white:   '#7c6f64'
 
-  # Bright colors
   bright:
     # black:   '#928374'
     # red:     '#9d0006'
@@ -45,4 +45,5 @@ colors:
     magenta: '#b16286'
     cyan:    '#689d6a'
     white:   '#32302f'
+
 theme: Gruvbox-Light

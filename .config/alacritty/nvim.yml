@@ -4,9 +4,6 @@ import:
 env:
   TERM: alacritty
 
-# window:
-#   dynamic_padding: true
-
 scrolling:
   history: 50000
 
@@ -16,15 +13,12 @@ font:
     style: Regular
 
   bold:
-    #family: monospace
     style: Bold
 
   italic:
-    #family: monospace
     style: Italic
 
   bold_italic:
-    #family: monospace
     style: Bold Italic
 
   size: 12.0
