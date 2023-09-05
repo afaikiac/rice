@@ -56,7 +56,7 @@ main() {
 		shadow_mode
 		;;
 	full)
-		local dir=$HOME/Pictures
+		local dir=$HOME/Stuff/screenshots
 		local timestamp=$(date --utc +%Y-%m-%d-%H%M%S)
 		local filename=shot_full_"$timestamp".png
 		full_mode "$dir" "$filename"

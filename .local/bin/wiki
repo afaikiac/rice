@@ -2,31 +2,31 @@
 
 set -euo pipefail
 
-function print() {
+print() {
 	printf "%s\n" "$@" &>/dev/tty
 }
 
-function log() {
+log() {
 	printf "%s\n" "[$(basename "$0")] $1" &>/dev/tty
 }
 
-function die() {
+die() {
 	log "$@"
 	exit 1
 }
 
-function is_timestamped() {
+is_timestamped() {
 	[[ "$1" =~ \.[[:alnum:]]+$ ]] && [[ "$1" =~ [[:digit:]]{4}\-[[:digit:]]{2}\-[[:digit:]]{2}\-[[:digit:]]{6}(\.[[:alnum:]]+)$ ]]
 }
 
-function timestamp() {
+timestamp() {
 	local extension="${1##*.}"
 	local filename="${1%.*}"
 	local timestamp="$(date --utc '+%Y-%m-%d-%H%M%S')"
 	printf "%s_%s.%s" "$filename" "$timestamp" "$extension"
 }
 
-function get_markdown_link() {
+get_markdown_link() {
 	local link=""
 	if [[ "$1" =~ \.html$ ]]; then
 		link="[](file://$1)"
@@ -36,37 +36,34 @@ function get_markdown_link() {
 	printf "%s" "$link"
 }
 
-function move_to_src() {
-	local file=$1
-	local src=$2
-	local root=$3
-
-	local filename="$(basename "$file")"
-
-	if ! is_timestamped "$file"; then
-		filename="$(basename "$(timestamp "$file")")"
+main() {
+	local root="$HOME/Wiki"
+	local src="src"
+	local root_file="2023-02-13-115716.md"
+	
+	if ! [[ -d "$root" && -d "$root/$src" && -f "$root/$root_file" ]]; then
+	  die "One or more paths do not exist"
 	fi
 
-	mv "$file" "$src/$filename"
+	if test -n "${1:-}"; then
+		local file="$1"
 
-	local link="$(realpath -e --relative-base "$root" "$src/$filename")"
-	local markdown_link="$(get_markdown_link "$link")"
-	print "$markdown_link"
-}
-
-function main() {
-	local root=$(realpath -e "$HOME/wiki")
-	local src=$(realpath -e "$root/src")
-	local default_file=$(realpath -e "$root/2023-02-13-115716.md")
-
-	if [[ -n "${1:-}" ]]; then
-		if [[ -f "$1" ]]; then
-			move_to_src "$1" "$src" "$root"
-		else
-			die "$1 is not a file"
+		if ! test -f "$file"; then
+			die "$file is not a file"
 		fi
+
+		local filename
+		if is_timestamped "$file"; then
+			filename="$(basename "$file")"
+		else
+			filename="$(basename "$(timestamp "$file")")"
+		fi
+
+		mv "$file" "$root/$src/$filename"
+
+		print "$(get_markdown_link "$src/$filename")"
 	else
-		lvim "$default_file"
+		lvim "$root/$root_file"
 	fi
 }
 

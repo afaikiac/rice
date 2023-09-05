@@ -1,0 +1,113 @@
+#!/usr/bin/env bash
+
+set -eu -o pipefail
+
+RED=$(tput setaf 1)
+GREEN=$(tput setaf 2)
+YELLOW=$(tput setaf 3)
+NORMAL=$(tput sgr0)
+BOLD=$(tput bold)
+
+print() {
+	printf "%s\n" "$@" &>/dev/tty
+}
+
+log() {
+	printf "%s\n" "[$(basename "$0")] $1" &>/dev/tty
+}
+
+die() {
+	local message=${1:-"Something went wrong"}
+	log "$message"
+	exit 1
+}
+
+prompt_select_item() {
+	local prompt_text=$1
+	shift 1
+	local items=("$@")
+
+	print "$prompt_text"
+	for i in "${!items[@]}"; do
+		print "$i. ${items[i]}"
+	done
+	unset i
+
+	local selected_item
+	local default_selection=$((${#items[@]} - 1))
+	while true; do
+		read -p "Selection ($default_selection): " selection
+		if [ -z "$selection" ]; then
+			selection=$default_selection
+		fi
+
+		if [ "$selection" -ge 0 ] 2>/dev/null && [ "$selection" -lt "${#items[@]}" ] 2>/dev/null; then
+			selected_item="${items[selection]}"
+			break
+		else
+			print "Invalid selection. Please try again."
+		fi
+	done
+
+	echo "$selected_item"
+}
+
+main() {
+	if test $EUID -ne 0; then
+		die "${RED}${BOLD}This script must be run as root${NORMAL}"
+	fi
+
+	if test "$#" -ne 1; then
+		printf "Usage: %s <device_name>\n" "$(basename "$0")"
+		exit 1
+	fi
+
+	if ! test -b "$1"; then
+		die "${RED}Error: '$1' is not a valid block device${NORMAL}"
+	fi
+
+	device_name="$1"
+	filesystem=$(
+		prompt_select_item \
+			"Please select the filesystem for formatting $device_name:" \
+			"exfat" \
+			"ntfs" \
+			"vfat"
+	)
+
+	print
+	print "Selected device: $device_name"
+	print "Selected filesystem: $filesystem"
+	parted "$device_name" print
+	read -p "${RED}${BOLD}WARNING: This operation will erase all data on $device_name.${NORMAL} Do you want to continue? (yes/n): " choice
+
+	case "$choice" in
+	yes)
+		if mount | grep "$device_name"; then
+			umount "$(mount | grep "$device_name" | awk '{print $1}')"
+		fi
+
+		sgdisk --clear "$device_name"
+		# partition_label=$(lsblk -no SERIAL "$device_name" | awk '{print $1}')
+		# sgdisk --new=1:0: --typecode=1:0700 --change-name=1:"$partition_label" "$device_name"
+		sgdisk --new=1:0: --typecode=1:0700 "$device_name"
+
+		case "$filesystem" in
+		vfat)
+			mkfs.vfat "${device_name}1"
+			;;
+		ntfs)
+			mkfs.ntfs "${device_name}1"
+			;;
+		exfat)
+			mkfs.exfat "${device_name}1"
+			;;
+		esac
+		;;
+	*)
+		print "Formatting aborted."
+		;;
+	esac
+}
+
+main "$@"
