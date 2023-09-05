@@ -16,6 +16,7 @@ if status is-interactive
 
   abbr docker-image-rmi-none "docker images | tail -n +2 | awk '{if (\$1==\"<none>\") print \$3}' | xargs docker image rmi -f"
   abbr docker-container-rm-all "docker container ls -a | tail -n +2 | awk '{print \$1}' | xargs docker container rm"
+  abbr docker-run "docker run --rm --interactive --user=\"\$(id -u):\$(id -g)\" --volume \"\$PWD\":/data"
 
   abbr pip-uninstall-all "pip3 freeze | awk -v FS='==' '{print \$1}' | xargs pip3 uninstall --yes"
 

@@ -12,13 +12,16 @@ if status is-interactive
 
   if type -q "gitui"
     and type -q "yadm"
-    alias yadmui="gitui -d $(yadm worktree list -v | awk '{print $1}') --polling"
+    alias yadmui="gitui -d $(yadm worktree list -v | awk '{print $1}')"
   end
-
 
   if type -q "fzf"
     and type -q "camb"
     alias cambl="camb l | fzf --preview 'camb {}'"
+  end
+
+  if type -q "yarn"
+    alias yarn="yarn --use-yarnrc $XDG_CONFIG_HOME/yarn/config"
   end
 
   alias trash="gio trash"
