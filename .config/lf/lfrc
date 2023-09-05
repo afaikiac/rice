@@ -38,7 +38,7 @@ set cleaner ctpvclear
 cmd on-quit $ctpv -e $id
 
 # Automatically quit server when there are no clients left connected.
-set autoquit on
+set autoquit true
 
 # This command is called when current file is not a directory. You may want to
 # use either file extensions and/or mime types here. Below uses an editor for
