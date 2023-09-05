@@ -8,6 +8,7 @@ xkbcomp $HOME/.config/X11/xkbrc $DISPLAY &>/dev/null &
 layout-auto &
 dunst -conf $HOME/.config/dunst/dunstrc &
 copyq &
+aw-server-rust | aw-watcher-afk | aw-watcher-window &
 # xset r rate 250 45 -display $DISPLAY &
 
 if test -d "/sys/class/power_supply/BAT"*; then
