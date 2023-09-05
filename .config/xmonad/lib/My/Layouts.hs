@@ -34,14 +34,12 @@ import My.Theme.GruvboxLight
 -- limitWindows n sets maximum number of windows displayed for layout.
 tall =
     renamed [Replace "tall"] $
-    limitWindows 8 $
     windowNavigation $
     addTabs shrinkText myTabTheme $
     subLayout [] (Simplest) $
     ResizableTall 1 (3 / 100) (1 / 2) []
 mirror =
     renamed [Replace "mirror"] $
-    limitWindows 6 $
     windowNavigation $
     addTabs shrinkText myTabTheme $
     subLayout [] (Simplest) $
